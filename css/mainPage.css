@@ -1,0 +1,51 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: #141414;
+    padding: 10px 40px;
+
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+/* צד שמאל */
+.left {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+/*logo-size*/
+.logo-img {
+    height: 100px;
+}
+
+/* תפריט */
+.menu {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    color: white;
+}
+
+.menu li {
+    cursor:pointer;
+}
+
+.menu li:hover {
+    color: #22A39F;
+}
+
+/* צד ימין */
+.right img {
+    width: 35px;
+    border-radius: 5px;
+}
+
+/* שלא יכסה את הדף */
+body {
+    padding-top: 70px;
+}

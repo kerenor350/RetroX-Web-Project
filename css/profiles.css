@@ -1,0 +1,42 @@
+.container{
+    display: flex;
+    flex-direction: column; /* כותרת מעל פרופילים */
+    justify-content: center; /* מרכז אנכית */
+    align-items: center;     /* מרכז אופקית */
+    height: 100vh;
+}
+
+h1{
+    margin-bottom: 40px;
+}
+body {
+    background-color: var(--main-bg);
+    color: var(--text-color); /* כדי שהטקסט יהיה ברור */
+    text-align: center;
+}
+.profiles {
+    display: flex;
+    gap: 30px;
+}
+
+.profile {
+    background-color: var(--bg);
+    color: var(--text-dark);
+    padding: 10px;
+}
+
+.profile img:hover {
+    border: 3px solid var(--accent-color);
+}
+
+.name {
+    color: var(--text-dark);
+    font-size: larger;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+button {
+    background-color: var(--accent-color);
+    color: white;
+}
