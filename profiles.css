@@ -1,0 +1,14 @@
+h1{
+    text-align:center;
+}
+body {
+    background-color: #5a4632;
+    color: white; /* כדי שהטקסט יהיה ברור */
+}
+.profiles {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    gap: 30px;
+}
