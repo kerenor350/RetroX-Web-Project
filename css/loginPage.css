@@ -35,3 +35,24 @@
 .link{
     color:black;
 }
+#login-message {
+    min-height: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+}
+
+.error-message {
+    color: #8b0000;
+    background-color: rgba(255, 220, 220, 0.9);
+    padding: 8px;
+    border-radius: 6px;
+}
+
+.success-message {
+    color: #064d2b;
+    background-color: rgba(210, 255, 225, 0.9);
+    padding: 8px;
+    border-radius: 6px;
+}

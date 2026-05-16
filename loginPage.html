@@ -10,15 +10,27 @@
     <link rel="stylesheet" href="css/loginPage.css">
 </head>
 
+
 <body>
 
 <div class="bg"> 
     <div class="login-container">
         <h2 style="margin-bottom: 20px;">Login</h2>
-        <form style="display: flex; flex-direction: column; gap: 15px;">
-            <input type="text" placeholder="Username" required style="padding: 10px; border-radius: 5px; border: none;">
-            <input type="password" placeholder="Password" required style="padding: 10px; border-radius: 5px; border: none;">
-            <button type="submit" style="padding: 10px; background-color: rgb(92, 81, 63); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+       
+        <form id = "login-form" 
+        style="display: flex; flex-direction: column; gap: 15px;">
+            <input type="text" 
+            id="username"
+            placeholder="Username"
+             required 
+             style="padding: 10px; border-radius: 5px; border: none;">
+
+            <input type="password"
+            id="password"
+            placeholder="Password"
+             required style="padding: 10px; border-radius: 5px; border: none;">
+           <p id="login-message"></p>
+             <button type="submit" style="padding: 10px; background-color: rgb(92, 81, 63); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
                 Login
             </button>
         </form>
@@ -26,6 +38,7 @@
             <a href="createAnAccount.html" class="link"></a>
     </div>
 </div>
+<script src="js/loginPage.js"></script>
 </body>
 
 
