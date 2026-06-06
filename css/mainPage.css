@@ -106,19 +106,14 @@ body {
 
 .movie-card{
 
-    background-color:#222;
-
-    color:white;
-
-     width:250px;
+    width:100%;
+    max-width:250px;
 
     min-height:150px;
 
     padding:20px;
 
     border-radius:15px;
-
-    transition:0.3s;
 }
 
 .movie-card:hover{
@@ -174,4 +169,27 @@ body {
     object-fit: cover;
     border-radius: 12px;
     margin-bottom: 12px;
+}
+@media (max-width: 768px) {
+
+  .navbar {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .left {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .menu {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .search-input {
+    width: 150px;
+    opacity: 1;
+  }
 }

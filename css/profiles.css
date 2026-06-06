@@ -1,9 +1,11 @@
 .container{
     display: flex;
-    flex-direction: column; /* כותרת מעל פרופילים */
-    justify-content: center; /* מרכז אנכית */
-    align-items: center;     /* מרכז אופקית */
-    height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 100vh;
+    padding: 20px;
 }
 
 h1{
@@ -17,6 +19,8 @@ body {
 .profiles {
     display: flex;
     gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .profile {
@@ -39,4 +43,11 @@ body {
 button {
     background-color: var(--accent-color);
     color: white;
+}
+@media (max-width: 768px) {
+
+    .profiles {
+        flex-direction: column;
+        align-items: center;
+    }
 }
