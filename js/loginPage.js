@@ -25,10 +25,42 @@ form.addEventListener("submit", function(event) {
         return;
     }
 
-    message.textContent = "Login successful. Redirecting...";
-    message.classList.add("success-message");
+    fetch("/login", {
 
-    setTimeout(function() {
-        window.location.href = "mainPage.html";
-    }, 1000);
+    method: "POST",
+
+    headers: {
+        "Content-Type": "application/json"
+    },
+
+    body: JSON.stringify({
+        username: username,
+        password: password
+    })
+
+})
+.then(response => response.json())
+.then(data => {
+
+    message.textContent = data.message;
+
+    if (data.success) {
+
+        message.classList.add("success-message");
+
+        setTimeout(() => {
+
+            window.location.href = "mainPage.html";
+
+        }, 1000);
+
+    }
+
+    else {
+
+        message.classList.add("error-message");
+
+    }
+
+});
 });
