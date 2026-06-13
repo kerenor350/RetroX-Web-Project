@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 fetch("/movies")
     .then(response => response.json())
     .then(movies => {
@@ -117,3 +118,5 @@ function activateSearch() {
     });
 
 }
+=======
+>>>>>>> Stashed changes
