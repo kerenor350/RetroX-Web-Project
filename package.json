@@ -18,6 +18,7 @@
   "homepage": "https://github.com/kerenor350/WebDev#readme",
   "description": "",
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "express-session": "^1.19.0"
   }
 }

@@ -50,7 +50,7 @@ form.addEventListener("submit", function(event) {
 
         setTimeout(() => {
 
-            window.location.href = "mainPage.html";
+            window.location.href = "profiles.html";
 
         }, 1000);
 
