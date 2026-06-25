@@ -1,48 +1,45 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profiles</title>
+
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/profiles.css">
-  </head>
-  <body>
-    <div class= "container">
+</head>
 
-    <h1>Who's watching?</h1>
-    <div class="profiles">
-      <div class="profile">
-        <img src="assets/man1.jpg" width="180" />
+<body>
 
-        <p class="name" > Dave </p> <!--current name-->
+    <div class="container">
 
-        <input type="text" placeholder="Change name" />
-      </div>
+        <h1>Who's watching?</h1>
 
-      <div class="profile">
-        <img src="assets/girl1.jpg" width="180" />
+        <!-- הפרופילים ייטענו דינמית מהשרת -->
+        <div class="profiles">
 
-        <p class="name" > Allen </p> <!--current name-->
+        </div>
 
-      
-        <input type="text" placeholder= "Change name" />
-      </div>
-      <div class="profile">
-        <img src="assets/woman1 (1).jpg" width="180" />
+        <!-- הוספת פרסונה חדשה -->
+        <div class="add-persona">
 
-        <p class="name" > Marry </p> <!--current name-->
+            <input
+                type="text"
+                id="personaName"
+                placeholder="New persona name"
+            >
 
-        <input type="text" placeholder="Change name" />
-      </div>
-      <div class="profile">
-        <img src="assets/woman2.jpg" width="180" />
+            <button id="addPersonaBtn">
+                Add Persona
+            </button>
 
-        <p class="name" > Jessica </p> <!--current name-->
+        </div>
 
-        <input type="text" placeholder="Change name" />
-       </div>
-      </div>
     </div>
-  </body>
+
+    <script src="js/profiles.js"></script>
+
+</body>
+
 </html>
