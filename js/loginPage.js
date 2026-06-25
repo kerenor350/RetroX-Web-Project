@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 const form = document.querySelector("#login-form");
 const message = document.querySelector("#login-message");
 
@@ -64,3 +65,5 @@ form.addEventListener("submit", function(event) {
 
 });
 });
+=======
+>>>>>>> Stashed changes

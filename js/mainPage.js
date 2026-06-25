@@ -6,6 +6,7 @@ document.querySelector("#currentPersona")
     `Welcome ${persona}`;
 
 fetch(`/movies/${persona}`)
+fetch("/movies")
     .then(response => response.json())
     .then(movies => {
 
