@@ -1,4 +1,11 @@
-<<<<<<< Updated upstream
+const persona =
+    localStorage.getItem("selectedPersona");
+
+document.querySelector("#currentPersona")
+    .textContent =
+    `Welcome ${persona}`;
+
+fetch(`/movies/${persona}`)
 fetch("/movies")
     .then(response => response.json())
     .then(movies => {
@@ -118,5 +125,52 @@ function activateSearch() {
     });
 
 }
-=======
->>>>>>> Stashed changes
+document
+.querySelector("#logoutBtn")
+.addEventListener("click", () => {
+
+    fetch("/logout", {
+
+        method: "POST"
+
+    })
+    .then(response => response.json())
+    .then(data => {
+
+        if (data.success) {
+
+            window.location.href = "/";
+
+        }
+
+    });
+
+});
+document
+.querySelector("#logoutBtn")
+.addEventListener("click", logout);
+
+function logout(){
+
+    fetch("/logout",{
+
+        method:"POST"
+
+    })
+    .then(response => response.json())
+    .then(data=>{
+
+        if(data.success){
+
+            window.location.href="/";
+
+        }
+        else{
+
+            alert(data.message);
+
+        }
+
+    });
+
+}
