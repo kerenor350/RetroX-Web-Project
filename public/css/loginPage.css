@@ -1,0 +1,58 @@
+.bg {
+    background-image: url('../assets/coverRetro.png');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    width: 100%;
+    
+    display: flex;
+    justify-content: center; /* ממרכז אופקית */
+    
+    /* שינוי כאן: הצמדה לתחתית במקום למרכז */
+    align-items: flex-end; 
+    
+    /* מרווח מהקצה התחתון של המסך */
+    padding-bottom: 80px; 
+}
+
+.login-container {
+    width: 90%; /* הקטנת הרוחב */
+    max-width: 320px;
+    /* חשוב מאוד: גובה אוטומטי כדי שהריבוע יתאים לתוכן */
+    height: auto; 
+    
+    /* הקטנת המרווח הפנימי כדי שהריבוע לא ייראה ענק */
+    padding: 10px; 
+    
+    background-color: rgba(197, 175, 140, 0.85); 
+    border-radius: 8px; 
+    color: rgb(0, 0, 0); 
+    box-shadow: 0 15px 25px rgba(0,0,0,0.6); 
+    
+    /* ביטול ה-margin-top הישן */
+    margin-top: 0; 
+}
+.link{
+    color:black;
+}
+#login-message {
+    min-height: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+}
+
+.error-message {
+    color: #8b0000;
+    background-color: rgba(255, 220, 220, 0.9);
+    padding: 8px;
+    border-radius: 6px;
+}
+
+.success-message {
+    color: #064d2b;
+    background-color: rgba(210, 255, 225, 0.9);
+    padding: 8px;
+    border-radius: 6px;
+}
