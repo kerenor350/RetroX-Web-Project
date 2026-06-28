@@ -167,6 +167,14 @@ function logout(){
 }
 async function deleteMovie(id) {
 
+     const confirmDelete = confirm(
+        "Are you sure you want to delete this movie?"
+    );
+
+    if (!confirmDelete) {
+        return;
+    }
+    
     const response = await fetch(
 
         "/movies/" + id,

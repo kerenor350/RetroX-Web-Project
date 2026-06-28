@@ -1,15 +1,16 @@
-const moviesByPersona =
-    require("../models/movie.model");
+const Persona =
+    require("../models/persona.model");
 
-const personas = require("../models/personaModel");
+async function getAllPersonas(req, res) {
 
-function getAllPersonas(req, res) {
+    const personas =
+        await Persona.find();
 
     res.json(personas);
 
 }
 
-function addPersona(req, res) {
+async function addPersona(req, res) {
 
     const name = req.body.name?.trim();
 
@@ -22,9 +23,9 @@ function addPersona(req, res) {
 
     }
 
-    const exists = personas.find(
-        persona => persona.name === name
-    );
+    const exists = await Persona.findOne({
+        name: name
+    });
 
     if (exists) {
 
@@ -35,15 +36,12 @@ function addPersona(req, res) {
 
     }
 
-    const newPersona = {
+    const newPersona = await Persona.create({
 
-        id: personas.length + 1,
         name: name,
         image: "assets/man1.jpg"
 
-    };
-
-    personas.push(newPersona);
+    });
 
     res.json({
         success: true,
