@@ -214,3 +214,28 @@ body {
     background:#b51f1f;
 
 }
+.delete-btn{
+
+    margin-top:10px;
+
+    width:100%;
+
+    padding:8px;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    background:#b30000;
+
+    color:white;
+
+}
+
+.delete-btn:hover{
+
+    background:#e60000;
+
+}

@@ -1,3 +1,8 @@
+const profileImage =
+    localStorage.getItem("selectedPersonaImage");
+
+document.querySelector(".profile-img").src =
+    profileImage;
 const persona =
     localStorage.getItem("selectedPersona");
 
@@ -20,7 +25,9 @@ fetch(`/movies/${persona}`)
 
             feedContainer.innerHTML += `
 
-            <div class="movie-card">
+            <div class="movie-card"
+             id="movie-${movie._id}"
+             >
 
                 <img
                     src="${movie.image}"
@@ -41,6 +48,12 @@ fetch(`/movies/${persona}`)
                     </span>
 
                 </button>
+                <button
+    class="delete-btn"
+    onclick="deleteMovie('${movie._id}')"
+>
+    🗑 Delete
+</button>
 
             </div>
 
@@ -126,27 +139,6 @@ function activateSearch() {
 }
 document
 .querySelector("#logoutBtn")
-.addEventListener("click", () => {
-
-    fetch("/logout", {
-
-        method: "POST"
-
-    })
-    .then(response => response.json())
-    .then(data => {
-
-        if (data.success) {
-
-            window.location.href = "/";
-
-        }
-
-    });
-
-});
-document
-.querySelector("#logoutBtn")
 .addEventListener("click", logout);
 
 function logout(){
@@ -171,5 +163,37 @@ function logout(){
         }
 
     });
+
+}
+async function deleteMovie(id) {
+
+    const response = await fetch(
+
+        "/movies/" + id,
+
+        {
+            method: "DELETE"
+        }
+
+    );
+
+    const result =
+        await response.json();
+
+    if (result.success) {
+
+        document
+            .getElementById(
+                "movie-" + id
+            )
+            .remove();
+
+    }
+
+    else {
+
+        alert(result.message);
+
+    }
 
 }

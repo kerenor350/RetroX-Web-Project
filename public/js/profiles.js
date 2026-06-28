@@ -15,7 +15,7 @@ fetch("/personas")
 
             <div 
             class="profile"
-            onclick="selectPersona('${persona.name}')"
+            onclick="selectPersona('${persona.name}', '${persona.image}')"
 >
 
     <img
@@ -91,13 +91,10 @@ document
 
     });
 
-    function selectPersona(name) {
+function selectPersona(name, image) {
 
-    localStorage.setItem(
-        "selectedPersona",
-        name
-    );
+    localStorage.setItem("selectedPersona", name);
+    localStorage.setItem("selectedPersonaImage", image);
 
-    window.location.href =
-        "mainPage.html";
+    window.location.href = "/main";
 }
