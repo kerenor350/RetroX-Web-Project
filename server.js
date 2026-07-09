@@ -1,99 +1,91 @@
 const express = require("express");
 const path = require("path");
+const session = require("express-session");
+const authRoutes = require("./routes/authRoutes");
+const personaRoutes = require("./routes/personaRoutes");
+const movieRoutes = require("./routes/movieRoutes");
+require("dotenv").config();
+
+const connectDB = require("./config/db");
 
 const app = express();
+
+console.log("MY SERVER FILE");
 
 const PORT = 3000;
 
 app.use(express.json());
 
+app.use(session({
 
-// מאפשר גישה לקבצים סטטיים
-app.use(express.static(__dirname));
+    secret: "mySecretKey",
 
-const users = [
+    resave: false,
 
-    {
-        username: "keren",
-        password: "1234"
-    },
+    saveUninitialized: false
 
-    {
-        username: "admin",
-        password: "admin"
+}));
+
+
+app.use(express.static(path.join(__dirname, "public")));
+app.use(authRoutes);
+app.use(personaRoutes);
+app.use(movieRoutes);
+
+function checkLogin(req, res, next) {
+
+    if (req.session.loggedIn) {
+
+        next();
+
+    } else {
+
+        res.status(401).json({
+            success: false,
+            message: "Please login first."
+        });
+
     }
 
-];
+}
 
-const movies = [
 
-    {
-        title: "Midnight Circuit",
-        likes: 120,
-        image: "assets/midnight-circuit.png"
-    },
-
-    {
-        title: "Desert Signal",
-        likes: 90,
-        image: "assets/desert-signal.png"
-    },
-
-    {
-        title: "The Last Lighthouse",
-        likes: 75,
-        image: "assets/last-lighthouse.png"
-    },
-
-    {
-        title: "Neon Chase",
-        likes: 60,
-        image: "assets/neon-chase.png"
-    }
-
-];
 
 
 
 // עמוד הבית
 app.get("/", (req, res) => {
     res.sendFile(
-        path.join(__dirname, "loginPage.html")
+        path.join(__dirname, "views", "loginPage.html")
     );
 });
+app.get("/profiles", (req, res) => {
+
+    res.sendFile(
+        path.join(__dirname, "views", "profiles.html")
+    );
+
+});
+app.get("/main", (req, res) => {
+    res.sendFile(
+        path.join(__dirname, "views", "mainPage.html")
+    );
+});
+
+
+
+
+console.log("Personas route loaded");
+
+
+
+ 
+
+app.get("/test", (req, res) => {
+    res.send("WORKS");
+});
+connectDB();
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
-});
-
-app.post("/login", (req, res) => {
-
-    const { username, password } = req.body;
-
-    const user = users.find(user =>
-        user.username === username &&
-        user.password === password
-    );
-
-    if (user) {
-
-        res.json({
-            success: true,
-            message: "Login successful"
-        });
-
-    } else {
-
-        res.json({
-            success: false,
-            message: "Invalid username or password"
-        });
-
-    }
-
-});
-app.get("/movies", (req, res) => {
-
-    res.json(movies);
-
 });
