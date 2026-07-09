@@ -158,7 +158,7 @@ body {
 
     gap: 40px;
 
-    padding: 20px 40px 60px;
+    padding: 20px 0 60px;
 
 }
 
@@ -1038,7 +1038,7 @@ body {
 
 .search-analytics-section {
 
-    padding: 0 40px 30px;
+    padding: 0 0 30px;
 
 }
 
@@ -1211,5 +1211,85 @@ body {
         padding: 0 20px 20px;
 
     }
+
+}
+
+.admin-create-section {
+
+    background: #1a1a1a;
+
+    border-radius: 12px;
+
+    padding: 20px;
+
+    margin-bottom: 24px;
+
+    color: white;
+
+}
+
+.admin-create-form {
+
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+
+    gap: 10px;
+
+}
+
+.admin-create-form select,
+.admin-create-form input,
+.admin-create-form textarea {
+
+    padding: 10px;
+
+    border: 1px solid #333;
+
+    border-radius: 8px;
+
+    background: #111;
+
+    color: white;
+
+}
+
+.admin-create-form textarea {
+
+    grid-column: 1 / -1;
+
+    min-height: 80px;
+
+}
+
+.feed-card {
+
+    position: relative;
+
+}
+
+.my-list-remove-btn {
+
+    position: absolute;
+
+    top: 8px;
+
+    right: 8px;
+
+    z-index: 3;
+
+    background: rgba(229, 9, 20, 0.9);
+
+    color: white;
+
+    border: none;
+
+    border-radius: 6px;
+
+    padding: 4px 8px;
+
+    font-size: 0.75rem;
+
+    cursor: pointer;
 
 }

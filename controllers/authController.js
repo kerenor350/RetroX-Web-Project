@@ -1,9 +1,6 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
-
-// =====================================
-// Login
-// =====================================
+const logger = require("../utils/logger");
 
 async function login(req, res) {
 
@@ -41,6 +38,10 @@ async function login(req, res) {
 
         if (!user) {
 
+            logger.warn(
+                `Failed login attempt for unknown user: ${username.trim()}`
+            );
+
             return res.json({
 
                 success: false,
@@ -60,6 +61,10 @@ async function login(req, res) {
 
         if (!match) {
 
+            logger.warn(
+                `Failed login attempt for user: ${username.trim()}`
+            );
+
             return res.json({
 
                 success: false,
@@ -73,6 +78,8 @@ async function login(req, res) {
         req.session.username = user.username;
         req.session.role = user.role;
 
+        logger.info(`User logged in: ${user.username} (${user.role})`);
+
         res.json({
 
             success: true,
@@ -85,6 +92,8 @@ async function login(req, res) {
 
     catch (error) {
 
+        logger.error("Login failed", error);
+
         res.status(500).json({
 
             success: false,
@@ -95,10 +104,6 @@ async function login(req, res) {
     }
 
 }
-
-// =====================================
-// Register
-// =====================================
 
 async function register(req, res) {
 
@@ -165,6 +170,8 @@ async function register(req, res) {
 
         await user.save();
 
+        logger.info(`New user registered: ${user.username}`);
+
         res.json({
 
             success: true,
@@ -175,6 +182,8 @@ async function register(req, res) {
     }
 
     catch (error) {
+
+        logger.error("Registration failed", error);
 
         res.status(500).json({
 
@@ -187,15 +196,15 @@ async function register(req, res) {
 
 }
 
-// =====================================
-// Logout
-// =====================================
-
 function logout(req, res) {
+
+    const username = req.session?.username || "unknown";
 
     req.session.destroy((err) => {
 
         if (err) {
+
+            logger.error("Logout failed", err);
 
             return res.status(500).json({
 
@@ -205,6 +214,8 @@ function logout(req, res) {
             });
 
         }
+
+        logger.info(`User logged out: ${username}`);
 
         res.json({
 

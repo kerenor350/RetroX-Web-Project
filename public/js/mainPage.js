@@ -1,5 +1,7 @@
 const persona = localStorage.getItem("selectedPersona");
 const profileImage = localStorage.getItem("selectedPersonaImage");
+const userRole = localStorage.getItem("role");
+const isAdmin = userRole === "admin";
 
 if (!persona) {
     window.location.href = "/";
@@ -28,7 +30,36 @@ const CATEGORY_ROW_IDS = {
 
 loadFeed();
 initAdvancedSearch();
-loadAnalytics();
+initAdminUi();
+
+function initAdminUi() {
+
+    const adminBlock = document.getElementById("admin-analytics-block");
+    const asideCanvas = document.getElementById("stats-canvas");
+
+    if (!isAdmin) {
+
+        if (adminBlock) {
+            adminBlock.style.display = "none";
+        }
+
+        if (asideCanvas?.parentElement) {
+            asideCanvas.parentElement.style.display = "none";
+        }
+
+        document.querySelectorAll(
+            '[onclick*="analytics-section"]'
+        ).forEach(item => {
+            item.style.display = "none";
+        });
+
+        return;
+
+    }
+
+    loadAnalytics();
+
+}
 
 async function loadFeed() {
 
@@ -57,7 +88,9 @@ async function loadFeed() {
             );
         });
 
-        renderMovieRow("my-list", feedData.myList || []);
+        renderMovieRow("my-list", feedData.myList || [], {
+            showRemove: true
+        });
 
         activateSearch();
 
@@ -108,7 +141,8 @@ function renderMovieRow(rowId, movies, options = {}) {
     movies.forEach((movie, index) => {
         row.appendChild(
             createFeedCard(movie, {
-                rank: options.showRank ? index + 1 : null
+                rank: options.showRank ? index + 1 : null,
+                showRemove: options.showRemove
             })
         );
     });
@@ -144,7 +178,23 @@ function createFeedCard(movie, options = {}) {
             <span class="feed-card-title">${escapeHtml(movie.title)}</span>
             <span class="feed-card-likes">❤️ ${movie.likes || 0}</span>
         </div>
+        ${options.showRemove ? `
+            <button class="my-list-remove-btn" type="button">Remove</button>
+        ` : ""}
     `;
+
+    if (options.showRemove) {
+
+        const removeBtn = card.querySelector(".my-list-remove-btn");
+
+        removeBtn.addEventListener("click", (event) => {
+
+            event.stopPropagation();
+            removeFromMyList(movie._id);
+
+        });
+
+    }
 
     card.addEventListener("click", () => {
         openDetailModal(movie);
@@ -154,6 +204,46 @@ function createFeedCard(movie, options = {}) {
     card._video = video;
 
     return card;
+
+}
+
+async function removeFromMyList(movieId) {
+
+    if (!confirm("Remove this item from My List?")) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(`/movies/my-list/${movieId}`, {
+
+            method: "DELETE",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                persona: currentPersona
+            })
+
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+            alert(result.message || "Could not remove item.");
+            return;
+        }
+
+        loadFeed();
+
+    } catch (error) {
+
+        console.error(error);
+        alert("Could not remove item.");
+
+    }
 
 }
 
@@ -211,7 +301,51 @@ function openDetailModal(movie) {
 
     renderDetailReviews(movie.title);
 
+    loadDetailImdbInfo(movie.title);
+
     document.getElementById("detailModal").style.display = "flex";
+
+}
+
+async function loadDetailImdbInfo(movieTitle) {
+
+    const container = document.getElementById("detailImdbInfo");
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = "<p class='imdb-loading'>Loading IMDB comparison...</p>";
+
+    try {
+
+        const response = await fetch(
+            `/external/imdb?movieTitle=${encodeURIComponent(movieTitle)}`
+        );
+
+        const result = await response.json();
+
+        if (!result.success) {
+            container.innerHTML =
+                `<p class='imdb-error'>${result.message}</p>`;
+            return;
+        }
+
+        const imdb = result.imdb;
+
+        container.innerHTML = `
+            <h4>IMDB Reference (${result.source})</h4>
+            <p><strong>${imdb.title}</strong> (${imdb.year}) — ${imdb.imdbRating || "N/A"} ⭐</p>
+            <p>${imdb.plot || ""}</p>
+            ${imdb.imdbUrl ? `<a href="${imdb.imdbUrl}" target="_blank" class="imdb-link">Open on IMDB →</a>` : ""}
+        `;
+
+    } catch (error) {
+
+        container.innerHTML =
+            "<p class='imdb-error'>Could not load IMDB data.</p>";
+
+    }
 
 }
 
@@ -583,18 +717,22 @@ async function loadAnalytics() {
 
     try {
 
-        const [categoryRes, personaRes] = await Promise.all([
+        const [categoryRes, personaRes, likesRes] = await Promise.all([
 
             fetch("/analytics/most-watched-by-category"),
-            fetch("/analytics/views-by-persona")
+            fetch("/analytics/views-by-persona"),
+            fetch("/analytics/likes-by-category")
 
         ]);
 
         const categoryData = await categoryRes.json();
         const personaData = await personaRes.json();
+        const likesData = await likesRes.json();
 
         renderCategoryAnalytics(categoryData.results || []);
         renderPersonaAnalytics(personaData.results || []);
+        renderLikesAnalytics(likesData.results || []);
+        drawStatsCanvas(categoryData.results || []);
 
     } catch (error) {
 
@@ -630,6 +768,37 @@ function renderCategoryAnalytics(results) {
 
 }
 
+function renderLikesAnalytics(results) {
+
+    const tbody = document.getElementById("analytics-by-likes");
+
+    if (!tbody) {
+        return;
+    }
+
+    tbody.innerHTML = "";
+
+    if (!results.length) {
+        tbody.innerHTML =
+            `<tr><td colspan="4">No likes data yet.</td></tr>`;
+        return;
+    }
+
+    results.forEach(row => {
+
+        tbody.innerHTML += `
+            <tr>
+                <td>${escapeHtml(row._id || "Unknown")}</td>
+                <td>${row.totalLikes}</td>
+                <td>${Math.round(row.avgLikes || 0)}</td>
+                <td>${row.itemCount}</td>
+            </tr>
+        `;
+
+    });
+
+}
+
 function renderPersonaAnalytics(results) {
 
     const tbody = document.getElementById("analytics-by-persona");
@@ -651,6 +820,56 @@ function renderPersonaAnalytics(results) {
                 <td>${Math.round(row.totalWatchTime || 0)}</td>
             </tr>
         `;
+
+    });
+
+}
+
+function drawStatsCanvas(results) {
+
+    const canvas = document.getElementById("stats-canvas");
+
+    if (!canvas) {
+        return;
+    }
+
+    const ctx = canvas.getContext("2d");
+    const width = canvas.width;
+    const height = canvas.height;
+
+    ctx.clearRect(0, 0, width, height);
+    ctx.fillStyle = "#111";
+    ctx.fillRect(0, 0, width, height);
+
+    if (!results.length) {
+        ctx.fillStyle = "#666";
+        ctx.font = "12px Arial";
+        ctx.fillText("No data yet", 40, height / 2);
+        return;
+    }
+
+    const topResults = results.slice(0, 4);
+    const maxViews = Math.max(...topResults.map(item => item.totalViews), 1);
+    const barWidth = 30;
+    const gap = 12;
+    const startX = 16;
+
+    topResults.forEach((item, index) => {
+
+        const barHeight = (item.totalViews / maxViews) * (height - 30);
+        const x = startX + index * (barWidth + gap);
+        const y = height - barHeight - 10;
+
+        ctx.fillStyle = "#22a39f";
+        ctx.fillRect(x, y, barWidth, barHeight);
+
+        ctx.fillStyle = "#ccc";
+        ctx.font = "9px Arial";
+        ctx.fillText(
+            String(item._id || "").slice(0, 4),
+            x,
+            height - 2
+        );
 
     });
 

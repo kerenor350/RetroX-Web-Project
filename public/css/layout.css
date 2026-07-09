@@ -1,0 +1,172 @@
+.site-footer {
+    background: #141414;
+    color: #aaa;
+    text-align: center;
+    padding: 24px 20px;
+    margin-top: 40px;
+    border-top: 1px solid #333;
+}
+
+.site-footer p {
+    margin: 6px 0;
+}
+
+.site-footer .footer-brand {
+    color: #22a39f;
+    font-family: "RetroTitle", Arial, sans-serif;
+    font-size: 1.4rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.main-layout {
+    display: flex;
+    gap: 24px;
+    padding: 0 40px 20px;
+    align-items: flex-start;
+}
+
+.site-aside {
+    flex: 0 0 220px;
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 20px;
+    position: sticky;
+    top: 90px;
+}
+
+.site-aside h2 {
+    color: #22a39f;
+    font-size: 1.2rem;
+    margin: 0 0 12px;
+}
+
+.site-aside ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+}
+
+.site-aside li {
+    color: white;
+    padding: 8px 0;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.site-aside li:hover {
+    color: #22a39f;
+}
+
+#stats-canvas {
+    width: 100%;
+    height: 120px;
+    border-radius: 8px;
+    background: #111;
+    display: block;
+}
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.reviews-columns {
+    column-count: 2;
+    column-gap: 20px;
+}
+
+.reviews-columns .review-card {
+    break-inside: avoid;
+    margin-bottom: 15px;
+}
+
+.d3-panels {
+    margin-top: 24px;
+}
+
+.d3-chart {
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+}
+
+.imdb-panel {
+    margin-top: 24px;
+}
+
+.imdb-search-form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.imdb-search-form select {
+    flex: 1 1 200px;
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background: #111;
+    color: white;
+}
+
+.imdb-widget {
+    color: white;
+    line-height: 1.6;
+}
+
+.imdb-widget p {
+    margin: 6px 0;
+}
+
+.imdb-link {
+    color: #f5c518;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.imdb-link:hover {
+    text-decoration: underline;
+}
+
+.detail-imdb-info {
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 10px 0;
+}
+
+.detail-imdb-info h4 {
+    margin: 0 0 8px;
+    color: #222;
+}
+
+.detail-imdb-info p {
+    margin: 4px 0;
+    color: #444;
+    font-size: 0.9rem;
+}
+
+.imdb-loading,
+.imdb-error {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 900px) {
+
+    .main-layout {
+        flex-direction: column;
+        padding: 0 20px 20px;
+    }
+
+    .site-aside {
+        width: 100%;
+        position: static;
+    }
+
+    .reviews-columns {
+        column-count: 1;
+    }
+
+}

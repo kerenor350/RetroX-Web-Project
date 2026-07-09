@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const logger = require("../utils/logger");
 
 async function connectDB() {
 
@@ -6,9 +7,9 @@ async function connectDB() {
 
     if (!uri) {
 
-        console.error("MongoDB connection failed:");
-        console.error("MONGO_URI is missing. Add it to your .env file.");
-        console.error("Example: MONGO_URI=mongodb://127.0.0.1:27017/netflix");
+        logger.error(
+            "MongoDB connection failed: MONGO_URI is missing in .env"
+        );
         process.exit(1);
 
     }
@@ -17,13 +18,13 @@ async function connectDB() {
 
         await mongoose.connect(uri);
 
-        console.log("MongoDB connected successfully");
-        console.log(`Database: ${mongoose.connection.name}`);
+        logger.info(
+            `MongoDB connected successfully (database: ${mongoose.connection.name})`
+        );
 
     } catch (error) {
 
-        console.error("MongoDB connection failed:");
-        console.error(error.message);
+        logger.error("MongoDB connection failed", error);
         process.exit(1);
 
     }

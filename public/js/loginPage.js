@@ -50,6 +50,24 @@ loginForm.addEventListener("submit", async function(e){
     const password =
         document.getElementById("password").value.trim();
 
+    if (username.length < 3) {
+
+        loginMessage.textContent =
+            "Username must be at least 3 characters long.";
+
+        return;
+
+    }
+
+    if (password.length < 4) {
+
+        loginMessage.textContent =
+            "Password must be at least 4 characters long.";
+
+        return;
+
+    }
+
     const response =
         await fetch("/login",{
 
@@ -114,6 +132,24 @@ registerForm.addEventListener("submit", async function(e){
 
     const confirmPassword =
         document.getElementById("registerPassword2").value.trim();
+
+    if (username.length < 3) {
+
+        registerMessage.textContent =
+            "Username must contain at least 3 characters.";
+
+        return;
+
+    }
+
+    if (password.length < 4) {
+
+        registerMessage.textContent =
+            "Password must contain at least 4 characters.";
+
+        return;
+
+    }
 
     if(password !== confirmPassword){
 

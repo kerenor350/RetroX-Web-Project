@@ -6,7 +6,8 @@ const searchController =
     require("../controllers/searchController");
 
 const {
-    checkLogin
+    checkLogin,
+    checkAdmin
 } = require("../middleware/authMiddleware");
 
 router.get(
@@ -33,7 +34,7 @@ router.get(
 
     "/analytics/most-watched-by-category",
 
-    checkLogin,
+    checkAdmin,
 
     searchController.getMostWatchedByCategory
 
@@ -43,9 +44,19 @@ router.get(
 
     "/analytics/views-by-persona",
 
-    checkLogin,
+    checkAdmin,
 
     searchController.getViewsByPersona
+
+);
+
+router.get(
+
+    "/analytics/likes-by-category",
+
+    checkAdmin,
+
+    searchController.getLikesByCategory
 
 );
 

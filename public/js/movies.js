@@ -10,6 +10,67 @@ if (profileImage) {
 
 loadAllMovies();
 initMoviesSearch();
+initAdminFeatures();
+
+function initAdminFeatures() {
+
+    if (role !== "admin") {
+        return;
+    }
+
+    document.getElementById("admin-create-section").style.display = "block";
+
+    document
+        .getElementById("create-catalog-form")
+        .addEventListener("submit", createCatalogItem);
+
+}
+
+async function createCatalogItem(event) {
+
+    event.preventDefault();
+
+    const message = document.getElementById("create-catalog-message");
+
+    const payload = {
+
+        contentType: document.getElementById("create-contentType").value,
+        title: document.getElementById("create-title").value.trim(),
+        image: document.getElementById("create-image").value.trim(),
+        category: document.getElementById("create-category").value,
+        year: document.getElementById("create-year").value,
+        persona: document.getElementById("create-persona").value.trim(),
+        description: document.getElementById("create-description").value.trim()
+
+    };
+
+    const response = await fetch("/movies/catalog", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(payload)
+
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+
+        message.textContent = result.message;
+        event.target.reset();
+        loadAllMovies();
+
+    } else {
+
+        message.textContent = result.message || "Could not create item.";
+
+    }
+
+}
 
 async function loadAllMovies() {
 
@@ -84,7 +145,7 @@ function renderMovies(movies) {
 <h2>${movie.title}</h2>
 
 <p class="movie-meta">
-    ${movie.category || "General"} · ${movie.year || "N/A"} · ❤️ ${movie.likes || 0}
+    ${movie.contentType || "Movie"} · ${movie.category || "General"} · ${movie.year || "N/A"} · ❤️ ${movie.likes || 0}
 </p>
 
 <button
@@ -209,7 +270,7 @@ async function addMovie(title, image) {
 
     const persona = localStorage.getItem("selectedPersona");
 
-    const response = await fetch("/movies", {
+    const response = await fetch("/movies/my-list", {
 
         method: "POST",
 
@@ -221,7 +282,6 @@ async function addMovie(title, image) {
 
             title,
             image,
-            likes: 0,
             persona
 
         })
@@ -230,9 +290,9 @@ async function addMovie(title, image) {
 
     const result = await response.json();
 
-    if (response.ok) {
+    if (result.success) {
 
-        alert("Movie added successfully!");
+        alert(result.message || "Added to My List.");
 
         window.location.href = "/main";
 

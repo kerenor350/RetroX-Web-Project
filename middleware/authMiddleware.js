@@ -1,6 +1,12 @@
+const logger = require("../utils/logger");
+
 function checkLoginPage(req, res, next) {
 
     if (!req.session.loggedIn) {
+
+        logger.warn(
+            `Unauthorized page access: ${req.method} ${req.originalUrl}`
+        );
 
         return res.redirect("/");
 
@@ -13,6 +19,10 @@ function checkLoginPage(req, res, next) {
 function checkLogin(req, res, next) {
 
     if (!req.session.loggedIn) {
+
+        logger.warn(
+            `Unauthorized API access: ${req.method} ${req.originalUrl}`
+        );
 
         return res.status(401).json({
 
@@ -31,6 +41,10 @@ function checkAdmin(req, res, next) {
 
     if (!req.session.loggedIn) {
 
+        logger.warn(
+            `Unauthorized admin API access: ${req.method} ${req.originalUrl}`
+        );
+
         return res.status(401).json({
 
             success: false,
@@ -41,6 +55,10 @@ function checkAdmin(req, res, next) {
     }
 
     if (req.session.role !== "admin") {
+
+        logger.warn(
+            `Forbidden admin action by ${req.session.username}: ${req.method} ${req.originalUrl}`
+        );
 
         return res.status(403).json({
 

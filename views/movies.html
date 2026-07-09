@@ -7,6 +7,8 @@
     <title>All Movies</title>
 
    <link rel="stylesheet" href="/css/mainPage.css">
+<link rel="stylesheet" href="/css/fonts.css">
+<link rel="stylesheet" href="/css/layout.css">
 <link rel="stylesheet" href="/css/movies.css">
 </head>
 
@@ -67,9 +69,50 @@
 
     </nav>
 
-    <div class="movies-page">
+    <header class="movies-header">
 
         <h1 class="page-title">All Movies</h1>
+
+    </header>
+
+    <div class="movies-page">
+
+        <section id="admin-create-section" class="admin-create-section" style="display:none;">
+
+            <h2 class="section-title">➕ Admin: Add Movie / Series</h2>
+
+            <form id="create-catalog-form" class="admin-create-form">
+
+                <select id="create-contentType" required>
+                    <option value="Movie">Movie</option>
+                    <option value="Series">Series</option>
+                </select>
+
+                <input id="create-title" type="text" placeholder="Title *" required>
+
+                <input id="create-image" type="text" placeholder="Image path (e.g. assets/movie.png) *" required>
+
+                <select id="create-category" required>
+                    <option value="">Category *</option>
+                    <option value="Action">Action</option>
+                    <option value="Comedy">Comedy</option>
+                    <option value="Sci-Fi">Sci-Fi</option>
+                    <option value="Drama">Drama</option>
+                </select>
+
+                <input id="create-year" type="number" placeholder="Year *" min="1990" max="2030" required>
+
+                <input id="create-persona" type="text" placeholder="Default list persona (optional)">
+
+                <textarea id="create-description" placeholder="Description"></textarea>
+
+                <button type="submit" class="search-btn">Create</button>
+
+            </form>
+
+            <p id="create-catalog-message" class="location-message"></p>
+
+        </section>
 
         <section class="movies-search-section">
 
@@ -118,6 +161,17 @@
         <div id="movies-container"></div>
 
     </div>
+
+    <footer class="site-footer">
+
+        <p class="footer-brand">RetroX</p>
+
+        <p>Web Development Project — HTML5 · CSS3 · JavaScript · MongoDB</p>
+
+        <p>&copy; 2026 Anna Sasporta &amp; Keren Or Lebovitch</p>
+
+    </footer>
+
 <div id="editMovieModal" class="modal">
 
     <div class="modal-content">

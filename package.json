@@ -6,6 +6,8 @@
     "start": "node server.js",
     "seed:movies": "node seedMovies.js",
     "seed:admin": "node createAdmin.js",
+    "seed:demo": "node seedDemo.js",
+    "verify:demo": "node verifyDemo.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

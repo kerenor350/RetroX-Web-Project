@@ -22,6 +22,11 @@ const movieSchema = new mongoose.Schema({
         required: true
     },
 
+    listOwner: {
+        type: String,
+        default: ""
+    },
+
     video: {
         type: String,
         default: "assets/demo.mp4"
@@ -33,6 +38,12 @@ const movieSchema = new mongoose.Schema({
         default: "Drama"
     },
 
+    contentType: {
+        type: String,
+        enum: ["Movie", "Series"],
+        default: "Movie"
+    },
+
     year: {
         type: Number,
         default: 2022
@@ -41,6 +52,26 @@ const movieSchema = new mongoose.Schema({
     description: {
         type: String,
         default: ""
+    },
+
+    address: {
+        type: String,
+        default: ""
+    },
+
+    city: {
+        type: String,
+        default: ""
+    },
+
+    lat: {
+        type: Number,
+        default: null
+    },
+
+    lng: {
+        type: Number,
+        default: null
     }
 
 }, {

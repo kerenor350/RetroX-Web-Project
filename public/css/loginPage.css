@@ -149,6 +149,17 @@
     text-align:center;
 
 }
+
+.login-footer {
+
+    position: relative;
+
+    z-index: 2;
+
+    background: rgba(20, 20, 20, 0.95);
+
+}
+
 .login-container h2{
 
     text-align:center;

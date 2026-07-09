@@ -1,5 +1,6 @@
-const Persona =
+﻿const Persona =
     require("../models/persona.model");
+const logger = require("../utils/logger");
 
 // =====================================
 // Get Personas
@@ -21,6 +22,8 @@ async function getAllPersonas(req, res) {
     }
 
     catch (error) {
+
+        logger.error("getAllPersonas failed", error);
 
         res.status(500).json({
 
@@ -98,6 +101,8 @@ async function addPersona(req, res) {
 
     catch (error) {
 
+        logger.error("addPersona failed", error);
+
         res.status(500).json({
 
             success: false,
@@ -167,6 +172,8 @@ async function updatePersona(req, res) {
 
     catch (error) {
 
+        logger.error("updatePersona failed", error);
+
         res.status(500).json({
 
             success: false,
@@ -219,6 +226,8 @@ async function deletePersona(req, res) {
     }
 
     catch (error) {
+
+        logger.error("deletePersona failed", error);
 
         res.status(500).json({
 

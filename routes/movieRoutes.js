@@ -23,9 +23,21 @@ router.get(
 );
 
 router.post(
-    "/movies",
+    "/movies/catalog",
+    checkAdmin,
+    movieController.createCatalogItem
+);
+
+router.post(
+    "/movies/my-list",
     checkLogin,
-    movieController.createMovie
+    movieController.addToMyList
+);
+
+router.delete(
+    "/movies/my-list/:id",
+    checkLogin,
+    movieController.removeFromMyList
 );
 
 router.post(

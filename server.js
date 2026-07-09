@@ -6,6 +6,12 @@ const watchHistoryRoutes =
 require("dotenv").config();
 
 const connectDB = require("./config/db");
+const logger = require("./utils/logger");
+const requestLogger = require("./middleware/requestLogger");
+const {
+    notFoundHandler,
+    errorHandler
+} = require("./middleware/errorMiddleware");
 
 const authRoutes = require("./routes/authRoutes");
 const personaRoutes = require("./routes/personaRoutes");
@@ -13,6 +19,7 @@ const movieRoutes = require("./routes/movieRoutes");
 const postRoutes = require("./routes/postRoutes");
 const feedRoutes = require("./routes/feedRoutes");
 const searchRoutes = require("./routes/searchRoutes");
+const chartsRoutes = require("./routes/chartsRoutes");
 
 const {
     checkLoginPage
@@ -23,6 +30,8 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
+
+app.use(requestLogger);
 
 app.use(session({
 
@@ -46,6 +55,7 @@ app.use(movieRoutes);
 app.use(postRoutes);
 app.use(feedRoutes);
 app.use(searchRoutes);
+app.use(chartsRoutes);
 app.use(watchHistoryRoutes);
 
 // ===========================
@@ -120,11 +130,32 @@ app.get(
     }
 );
 
+app.get(
+    "/map",
+    checkLoginPage,
+    (req, res) => {
+
+        res.sendFile(
+
+            path.join(
+                __dirname,
+                "views",
+                "map.html"
+            )
+
+        );
+
+    }
+);
+
 app.get("/test", (req, res) => {
 
     res.send("WORKS");
 
 });
+
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 async function startServer() {
 
@@ -132,10 +163,15 @@ async function startServer() {
 
     app.listen(PORT, () => {
 
-        console.log(`Server running on port ${PORT}`);
+        logger.info(`Server running on port ${PORT}`);
 
     });
 
 }
 
-startServer();
+startServer().catch((error) => {
+
+    logger.error("Failed to start server", error);
+    process.exit(1);
+
+});

@@ -1,6 +1,7 @@
 const Movie = require("../models/movie.model");
 const WatchHistory = require("../models/watchHistory.model");
 const Post = require("../models/postModel");
+const logger = require("../utils/logger");
 
 const CATEGORIES = ["Action", "Comedy", "Sci-Fi", "Drama"];
 
@@ -214,6 +215,8 @@ async function getPersonalFeed(req, res) {
     }
 
     catch (error) {
+
+        logger.error("getPersonalFeed failed", error);
 
         res.status(500).json({
 

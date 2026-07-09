@@ -1,11 +1,8 @@
 const Movie = require("../models/movie.model");
 const WatchHistory = require("../models/watchHistory.model");
+const logger = require("../utils/logger");
 
 const CATEGORIES = ["Action", "Comedy", "Sci-Fi", "Drama"];
-
-// =====================================
-// Search 1: category + year + minLikes
-// =====================================
 
 async function searchMoviesByFilters(req, res) {
 
@@ -66,6 +63,8 @@ async function searchMoviesByFilters(req, res) {
 
     catch (error) {
 
+        logger.error("searchMoviesByFilters failed", error);
+
         res.status(500).json({
 
             success: false,
@@ -76,11 +75,6 @@ async function searchMoviesByFilters(req, res) {
     }
 
 }
-
-// =====================================
-// Search 2: persona my-list + category + year + minLikes
-// persona is sent automatically from the client
-// =====================================
 
 async function searchMoviesByPersona(req, res) {
 
@@ -144,6 +138,8 @@ async function searchMoviesByPersona(req, res) {
 
     catch (error) {
 
+        logger.error("searchMoviesByPersona failed", error);
+
         res.status(500).json({
 
             success: false,
@@ -154,10 +150,6 @@ async function searchMoviesByPersona(req, res) {
     }
 
 }
-
-// =====================================
-// GroupBy 1: most watched by category
-// =====================================
 
 async function getMostWatchedByCategory(req, res) {
 
@@ -213,6 +205,8 @@ async function getMostWatchedByCategory(req, res) {
 
     catch (error) {
 
+        logger.error("getMostWatchedByCategory failed", error);
+
         res.status(500).json({
 
             success: false,
@@ -223,10 +217,6 @@ async function getMostWatchedByCategory(req, res) {
     }
 
 }
-
-// =====================================
-// GroupBy 2: view count by persona
-// =====================================
 
 async function getViewsByPersona(req, res) {
 
@@ -263,6 +253,52 @@ async function getViewsByPersona(req, res) {
 
     catch (error) {
 
+        logger.error("getViewsByPersona failed", error);
+
+        res.status(500).json({
+
+            success: false,
+            message: error.message
+
+        });
+
+    }
+
+}
+
+async function getLikesByCategory(req, res) {
+
+    try {
+
+        const results = await Movie.aggregate([
+
+            {
+                $group: {
+                    _id: "$category",
+                    totalLikes: { $sum: "$likes" },
+                    avgLikes: { $avg: "$likes" },
+                    itemCount: { $sum: 1 }
+                }
+            },
+
+            { $sort: { totalLikes: -1 } }
+
+        ]);
+
+        res.json({
+
+            success: true,
+            groupBy: "likes-by-category",
+            results
+
+        });
+
+    }
+
+    catch (error) {
+
+        logger.error("getLikesByCategory failed", error);
+
         res.status(500).json({
 
             success: false,
@@ -279,6 +315,7 @@ module.exports = {
     searchMoviesByFilters,
     searchMoviesByPersona,
     getMostWatchedByCategory,
-    getViewsByPersona
+    getViewsByPersona,
+    getLikesByCategory
 
 };

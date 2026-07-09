@@ -15,22 +15,26 @@ async function seedPersonas() {
 
             {
                 name: "Dave",
-                image: "assets/man1.jpg"
+                image: "assets/man1.jpg",
+                owner: "david"
             },
 
             {
                 name: "Allen",
-                image: "assets/girl1.jpg"
+                image: "assets/girl1.jpg",
+                owner: "david"
             },
 
             {
                 name: "Marry",
-                image: "assets/woman1 (1).jpg"
+                image: "assets/woman1 (1).jpg",
+                owner: "maya"
             },
 
             {
                 name: "Jessica",
-                image: "assets/woman2.jpg"
+                image: "assets/woman2.jpg",
+                owner: "maya"
             }
 
         ]);
@@ -41,7 +45,7 @@ async function seedPersonas() {
 
     }
 
-    catch(error){
+    catch (error) {
 
         console.log(error);
 

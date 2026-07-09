@@ -1,5 +1,6 @@
-const WatchHistory =
+﻿const WatchHistory =
     require("../models/watchHistory.model");
+const logger = require("../utils/logger");
 
 // =====================================
 // Save / Update progress
@@ -62,6 +63,8 @@ async function saveProgress(req, res) {
 
     catch (error) {
 
+        logger.error("saveProgress failed", error);
+
         res.status(500).json({
 
             success: false,
@@ -104,6 +107,8 @@ async function getProgress(req, res) {
 
     catch (error) {
 
+        logger.error("getProgress failed", error);
+
         res.status(500).json({
 
             success: false,
@@ -141,6 +146,8 @@ async function getContinueWatching(req, res) {
     }
 
     catch (error) {
+
+        logger.error("getContinueWatching failed", error);
 
         res.status(500).json({
 
