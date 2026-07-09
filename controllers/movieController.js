@@ -12,9 +12,7 @@ async function getMovies(req, res) {
 
         res.json(movies);
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
         res.status(500).json({
             success: false,
@@ -24,6 +22,7 @@ async function getMovies(req, res) {
     }
 
 }
+
 async function createMovie(req, res) {
 
     try {
@@ -34,9 +33,7 @@ async function createMovie(req, res) {
 
         res.status(201).json(movie);
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
         res.status(400).json({
             success: false,
@@ -73,9 +70,7 @@ async function deleteMovie(req, res) {
 
         });
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
         res.status(500).json({
 
@@ -88,38 +83,84 @@ async function deleteMovie(req, res) {
 
 }
 
+async function updateMovie(req, res) {
 
+    try {
+
+        const movie = await Movie.findByIdAndUpdate(
+
+            req.params.id,
+
+            {
+                title: req.body.title,
+                image: req.body.image
+            },
+
+            {
+                new: true
+            }
+
+        );
+
+        if (!movie) {
+
+            return res.status(404).json({
+
+                success: false,
+                message: "Movie not found"
+
+            });
+
+        }
+
+        res.json({
+
+            success: true,
+            message: "Movie updated successfully",
+            movie
+
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+
+            success: false,
+            message: error.message
+
+        });
+
+    }
+
+}
 
 async function getAllMovies(req, res) {
 
     try {
 
-        const movies = await Movie.aggregate([
-    {
-        $group: {
-            _id: "$title",
-            title: { $first: "$title" },
-            image: { $first: "$image" },
-            likes: { $first: "$likes" }
-        }
-    }
-]);
+        const movies = await Movie.find();
 
         res.json(movies);
 
     } catch (error) {
 
         res.status(500).json({
+
             success: false,
             message: error.message
+
         });
 
     }
 
 }
+
 module.exports = {
+
     getMovies,
     getAllMovies,
     createMovie,
+    updateMovie,
     deleteMovie
+
 };

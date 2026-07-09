@@ -1,66 +1,163 @@
-const form = document.querySelector("#login-form");
-const message = document.querySelector("#login-message");
+const loginForm =
+    document.getElementById("login-form");
 
-form.addEventListener("submit", function(event) {
+const registerForm =
+    document.getElementById("register-form");
 
-    event.preventDefault();
+const loginMessage =
+    document.getElementById("login-message");
 
-    const username = document.querySelector("#username").value.trim();
-    const password = document.querySelector("#password").value.trim();
+const registerMessage =
+    document.getElementById("register-message");
 
-    message.className = "";
-    message.textContent = "";
+// ===========================
+// Show Login
+// ===========================
 
-    if (username.length < 3) {
+function showLogin(){
 
-        message.textContent = "Username must be at least 3 characters long.";
-        message.classList.add("error-message");
-        return;
-    }
+    document.getElementById("loginBox").style.display = "block";
 
-    if (password.length < 4) {
+    document.getElementById("registerBox").style.display = "none";
 
-        message.textContent = "Password must be at least 4 characters long.";
-        message.classList.add("error-message");
-        return;
-    }
+}
 
-    fetch("/login", {
+// ===========================
+// Show Register
+// ===========================
 
-    method: "POST",
+function showRegister(){
 
-    headers: {
-        "Content-Type": "application/json"
-    },
+    document.getElementById("loginBox").style.display = "none";
 
-    body: JSON.stringify({
-        username: username,
-        password: password
-    })
+    document.getElementById("registerBox").style.display = "block";
 
-})
-.then(response => response.json())
-.then(data => {
+}
 
-    message.textContent = data.message;
+// ===========================
+// LOGIN
+// ===========================
 
-    if (data.success) {
+loginForm.addEventListener("submit", async function(e){
 
-        message.classList.add("success-message");
+    e.preventDefault();
 
-        setTimeout(() => {
+    loginMessage.textContent = "";
 
-            window.location.href = "/profiles";
+    const username =
+        document.getElementById("username").value.trim();
 
-        }, 1000);
+    const password =
+        document.getElementById("password").value.trim();
 
-    }
+    const response =
+        await fetch("/login",{
 
-    else {
+            method:"POST",
 
-        message.classList.add("error-message");
+            headers:{
+
+                "Content-Type":"application/json"
+
+            },
+
+            body:JSON.stringify({
+
+                username,
+                password
+
+            })
+
+        });
+
+    const result =
+        await response.json();
+
+    loginMessage.textContent =
+        result.message;
+
+    if(result.success){
+
+        localStorage.setItem(
+
+            "role",
+
+            result.role
+
+        );
+
+        setTimeout(()=>{
+
+            window.location.href="/profiles";
+
+        },800);
 
     }
 
 });
+
+// ===========================
+// REGISTER
+// ===========================
+
+registerForm.addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    registerMessage.textContent = "";
+
+    const username =
+        document.getElementById("registerUsername").value.trim();
+
+    const password =
+        document.getElementById("registerPassword").value.trim();
+
+    const confirmPassword =
+        document.getElementById("registerPassword2").value.trim();
+
+    if(password !== confirmPassword){
+
+        registerMessage.textContent =
+            "Passwords do not match.";
+
+        return;
+
+    }
+
+    const response =
+        await fetch("/register",{
+
+            method:"POST",
+
+            headers:{
+
+                "Content-Type":"application/json"
+
+            },
+
+            body:JSON.stringify({
+
+                username,
+                password
+
+            })
+
+        });
+
+    const result =
+        await response.json();
+
+    registerMessage.textContent =
+        result.message;
+
+    if(result.success){
+
+        setTimeout(()=>{
+
+            showLogin();
+
+        },1000);
+
+    }
+
 });

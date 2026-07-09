@@ -20,6 +20,11 @@ const movieSchema = new mongoose.Schema({
     persona: {
         type: String,
         required: true
+    },
+
+    video: {
+        type: String,
+        default: "assets/demo.mp4"
     }
 
 }, {

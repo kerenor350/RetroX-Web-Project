@@ -1,0 +1,157 @@
+/* ===========================
+   Video Modal
+=========================== */
+
+.video-modal {
+
+    display: none;
+
+    position: fixed;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0,0,0,.85);
+
+    backdrop-filter: blur(8px);
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 5000;
+
+}
+
+/* ===========================
+   Video Container
+=========================== */
+
+.video-container {
+
+    position: relative;
+
+    width: 80%;
+    max-width: 900px;
+
+    background: #181818;
+
+    padding: 25px;
+
+    border-radius: 18px;
+
+    box-shadow: 0 0 30px rgba(0,0,0,.6);
+
+    animation: openVideo .25s ease;
+
+}
+
+/* ===========================
+   Title
+=========================== */
+
+#videoTitle{
+
+    color:white;
+
+    margin-bottom:20px;
+
+    text-align:center;
+
+    font-size:28px;
+
+}
+
+/* ===========================
+   Video
+=========================== */
+
+#moviePlayer{
+
+    width:100%;
+
+    border-radius:12px;
+
+    outline:none;
+
+    background:black;
+
+}
+
+/* ===========================
+   Close Button
+=========================== */
+
+.close-video{
+
+    position:absolute;
+
+    right:20px;
+
+    top:15px;
+
+    font-size:28px;
+
+    color:white;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.close-video:hover{
+
+    color:#22a39f;
+
+    transform:scale(1.15);
+
+}
+
+/* ===========================
+   Animation
+=========================== */
+
+@keyframes openVideo{
+
+    from{
+
+        transform:scale(.85);
+
+        opacity:0;
+
+    }
+
+    to{
+
+        transform:scale(1);
+
+        opacity:1;
+
+    }
+
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media(max-width:768px){
+
+    .video-container{
+
+        width:95%;
+
+        padding:15px;
+
+    }
+
+    #videoTitle{
+
+        font-size:22px;
+
+    }
+
+}

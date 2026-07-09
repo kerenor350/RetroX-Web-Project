@@ -1,89 +1,183 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MainPage</title>
-    <link rel="stylesheet" href="/css/mainPage.css" />
-  </head>
-  <body>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Retro</title>
+
+    <link
+        rel="stylesheet"
+        href="/css/mainPage.css">
+
+</head>
+
+<body>
+
     <nav class="navbar">
-      <div class="left">
-        <img
-          src="/assets/logo.png"
-          class="logo-img"
-          alt="logo"
-        />
 
-        <ul class="menu">
-    <li onclick="goHome()">Home</li>
-    <li onclick="goMovies()">Movies</li>
-    <li>TV Shows</li>
-    <li>My List</li>
-    <li>Popular</li>
-</ul>
-      </div>
+        <div class="left">
 
-      <div class="right">
+            <img
+                src="/assets/logo.png"
+                class="logo-img"
+                alt="logo"
+                onclick="location.href='/'"
+            >
 
-    <div class="search-container">
+            <ul class="menu">
 
-        <img src="/assets/search icon.png" class="search-icon" />
+                <li onclick="goHome()">Home</li>
 
-        <input
-            type="text"
-            id="search-input"
-            class="search-input"
-            placeholder="Search..."
-        />
+                <li onclick="goMovies()">Movies</li>
 
-    </div>
+                <li>TV Shows</li>
 
-    <img
-        src="/assets/man1.jpg"
-        class="profile-img"
-        alt="profile"
-    />
+                <li>My List</li>
 
-    <button id="logoutBtn">
-        Logout
-    </button>
+                <li>Popular</li>
 
-</div>
+            </ul>
+
+        </div>
+
+        <div class="right">
+
+            <div class="search-container">
+
+                <img
+                    src="/assets/search icon.png"
+                    class="search-icon">
+
+                <input
+
+                    type="text"
+
+                    id="search-input"
+
+                    class="search-input"
+
+                    placeholder="Search..."
+
+                >
+
+            </div>
+
+            <img
+
+                src="/assets/man1.jpg"
+
+                class="profile-img"
+
+                alt="profile"
+
+            >
+
+            <button id="logoutBtn">
+
+                Logout
+
+            </button>
+
+        </div>
+
     </nav>
+
     <h2 id="currentPersona"></h2>
 
     <div id="feed-container"></div>
+
+    <!-- ===========================
+            REVIEW MODAL
+    ============================ -->
+
     <div id="reviewModal" class="modal">
 
-    <div class="modal-content">
+        <div class="modal-content">
 
-        <h2>Write Your Review</h2>
+            <h2>Write Your Review</h2>
 
-        <input
-            id="reviewTitle"
-            type="text"
-            placeholder="Review title">
+            <input
 
-        <textarea
-            id="reviewContent"
-            placeholder="Share your experience..."></textarea>
+                id="reviewTitle"
 
-        <button id="publishReview">
+                type="text"
 
-            Publish
+                placeholder="Review title"
 
-        </button>
+            >
 
-        <button onclick="closeReviewForm()">
+            <textarea
 
-            Cancel
+                id="reviewContent"
 
-        </button>
+                placeholder="Share your experience..."
+
+            ></textarea>
+
+            <button id="publishReview">
+
+                Publish
+
+            </button>
+
+            <button onclick="closeReviewForm()">
+
+                Cancel
+
+            </button>
+
+        </div>
 
     </div>
 
-</div>
+    <!-- ===========================
+            VIDEO MODAL
+    ============================ -->
+
+    <div id="videoModal" class="modal">
+
+        <div class="modal-content">
+
+            <span
+
+                class="close"
+
+                onclick="closeVideo()"
+
+                style="cursor:pointer;font-size:32px;align-self:flex-end;">
+
+                &times;
+
+            </span>
+
+            <h2 id="videoTitle"></h2>
+
+            <video
+
+                id="moviePlayer"
+
+                controls
+
+                width="100%"
+
+            >
+
+                <source src="" type="video/mp4">
+
+            </video>
+
+        </div>
+
+    </div>
+
     <script src="/js/mainPage.js"></script>
-  </body>
+
+</body>
+
 </html>

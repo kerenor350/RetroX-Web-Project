@@ -1,18 +1,22 @@
 const express = require("express");
 const path = require("path");
 const session = require("express-session");
-const authRoutes = require("./routes/authRoutes");
-const personaRoutes = require("./routes/personaRoutes");
-const movieRoutes = require("./routes/movieRoutes");
-const postRoutes =
-    require("./routes/postRoutes");
+const watchHistoryRoutes =
+    require("./routes/watchHistoryRoutes");
 require("dotenv").config();
 
 const connectDB = require("./config/db");
 
-const app = express();
+const authRoutes = require("./routes/authRoutes");
+const personaRoutes = require("./routes/personaRoutes");
+const movieRoutes = require("./routes/movieRoutes");
+const postRoutes = require("./routes/postRoutes");
 
-console.log("MY SERVER FILE");
+const {
+    checkLoginPage
+} = require("./middleware/authMiddleware");
+
+const app = express();
 
 const PORT = 3000;
 
@@ -28,75 +32,100 @@ app.use(session({
 
 }));
 
-
 app.use(express.static(path.join(__dirname, "public")));
+
+// ===========================
+// Routes
+// ===========================
+
 app.use(authRoutes);
 app.use(personaRoutes);
 app.use(movieRoutes);
 app.use(postRoutes);
+app.use(watchHistoryRoutes);
 
-function checkLogin(req, res, next) {
+// ===========================
+// Pages
+// ===========================
 
-    if (req.session.loggedIn) {
+app.get("/", (req, res) => {
 
-        next();
+    res.sendFile(
 
-    } else {
+        path.join(
+            __dirname,
+            "views",
+            "loginPage.html"
+        )
 
-        res.status(401).json({
-            success: false,
-            message: "Please login first."
-        });
+    );
+
+});
+
+app.get(
+    "/profiles",
+    checkLoginPage,
+    (req, res) => {
+
+        res.sendFile(
+
+            path.join(
+                __dirname,
+                "views",
+                "profiles.html"
+            )
+
+        );
 
     }
+);
 
-}
+app.get(
+    "/main",
+    checkLoginPage,
+    (req, res) => {
 
+        res.sendFile(
 
+            path.join(
+                __dirname,
+                "views",
+                "mainPage.html"
+            )
 
+        );
 
+    }
+);
 
-// עמוד הבית
-app.get("/", (req, res) => {
-    res.sendFile(
-        path.join(__dirname, "views", "loginPage.html")
-    );
-});
-app.get("/profiles", (req, res) => {
+app.get(
+    "/movies",
+    checkLoginPage,
+    (req, res) => {
 
-    res.sendFile(
-        path.join(__dirname, "views", "profiles.html")
-    );
+        res.sendFile(
 
-});
-app.get("/main", (req, res) => {
-    res.sendFile(
-        path.join(__dirname, "views", "mainPage.html")
-    );
-});
-app.get("/movies", (req, res) => {
+            path.join(
+                __dirname,
+                "views",
+                "movies.html"
+            )
 
-    res.sendFile(
-        path.join(__dirname, "views", "movies.html")
-    );
+        );
 
-});
-
-
-
-
-console.log("Personas route loaded");
-
-
-
- 
+    }
+);
 
 app.get("/test", (req, res) => {
+
     res.send("WORKS");
+
 });
+
 connectDB();
 
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
 
+    console.log(`Server running on port ${PORT}`);
+
+});

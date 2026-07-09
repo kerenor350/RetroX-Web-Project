@@ -561,3 +561,32 @@ body {
     font-size:13px;
 
 }
+.watch-btn{
+
+    margin-top:10px;
+
+    width:100%;
+
+    padding:10px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#e50914;
+
+    color:white;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.watch-btn:hover{
+
+    background:#b20710;
+
+}

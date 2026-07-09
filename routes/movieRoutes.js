@@ -5,23 +5,38 @@ const router = express.Router();
 const movieController =
     require("../controllers/movieController");
 
+const {
+    checkLogin,
+    checkAdmin
+} = require("../middleware/authMiddleware");
+
 router.get(
     "/movies/all",
+    checkLogin,
     movieController.getAllMovies
 );
 
 router.get(
     "/movies/:persona",
+    checkLogin,
     movieController.getMovies
 );
 
 router.post(
     "/movies",
+    checkLogin,
     movieController.createMovie
+);
+
+router.put(
+    "/movies/:id",
+    checkAdmin,
+    movieController.updateMovie
 );
 
 router.delete(
     "/movies/:id",
+    checkAdmin,
     movieController.deleteMovie
 );
 

@@ -29,7 +29,8 @@ fetch(`/movies/${persona}`)
             document.querySelector("#feed-container");
 
         movies.forEach(movie => {
-
+const video =
+    movie.video || "assets/demo.mp4";
             feedContainer.innerHTML += `
 
             <div class="movie-card"
@@ -55,6 +56,13 @@ fetch(`/movies/${persona}`)
                     </span>
 
                 </button>
+                <button
+    class="review-btn"
+    onclick="openVideo('${movie.title}','${video}')">
+
+    ▶ Watch
+
+</button>
                 <button
     class="review-btn"
     onclick="openReviewForm('${movie.title}')">
@@ -402,5 +410,146 @@ async function deleteReview(id) {
 function goMovies() {
 
     window.location.href = "/movies";
+
+}
+// ===========================
+// Video Player
+// ===========================
+
+let currentMovie = "";
+let currentPersona = "";
+let currentVideo = "";
+
+// ===========================
+// Open Video
+// ===========================
+
+async function openVideo(movie, video) {
+
+    currentMovie = movie;
+    currentPersona = localStorage.getItem("selectedPersona");
+
+    document.getElementById("videoTitle").textContent = movie;
+
+    const player =
+        document.getElementById("moviePlayer");
+
+    document
+        .getElementById("videoModal")
+        .style.display = "flex";
+
+    try {
+
+        const response =
+            await fetch(`/watch-history/${currentPersona}/${movie}`);
+
+        const history =
+            await response.json();
+
+        player.onloadedmetadata = () => {
+
+            if (history?.currentTime) {
+
+                player.currentTime = history.currentTime;
+
+            }
+
+            player.play();
+
+        };
+
+        player.src = "/" + video;
+
+    }
+
+    catch (err) {
+
+        console.log(err);
+
+        player.src = "/" + video;
+
+        player.play();
+
+    }
+
+}
+
+// ===========================
+// Close Video
+// ===========================
+
+async function closeVideo() {
+
+    const player =
+        document.getElementById("moviePlayer");
+
+    // שומרים את הערכים לפני כל פעולה על הנגן
+    const currentTime =
+        player.currentTime;
+
+    const duration =
+        player.duration;
+
+    try {
+
+        await fetch(
+
+            "/watch-history",
+
+            {
+
+                method: "POST",
+
+                headers: {
+
+                    "Content-Type": "application/json"
+
+                },
+
+                body: JSON.stringify({
+
+                    persona: currentPersona,
+
+                    movie: currentMovie,
+
+                    currentTime: currentTime,
+
+                    duration: duration
+
+                })
+
+            }
+
+        );
+
+        console.log("Progress saved:", {
+
+            persona: currentPersona,
+
+            movie: currentMovie,
+
+            currentTime: currentTime,
+
+            duration: duration
+
+        });
+
+    }
+
+    catch (err) {
+
+        console.log("Save error:", err);
+
+    }
+
+    player.pause();
+
+    player.removeAttribute("src");
+
+    player.load();
+
+    document
+        .getElementById("videoModal")
+        .style.display = "none";
 
 }

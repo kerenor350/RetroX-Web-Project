@@ -1,37 +1,99 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
     <title>Profiles</title>
 
-    <link rel="stylesheet" href="/css/variables.css">
-    <link rel="stylesheet" href="/css/profiles.css">
+    <link
+        rel="stylesheet"
+        href="/css/variables.css">
+
+    <link
+        rel="stylesheet"
+        href="/css/mainPage.css">
+
+    <link
+        rel="stylesheet"
+        href="/css/profiles.css">
+
 </head>
 
 <body>
 
-    <div class="container">
+    <!-- ===========================
+            NAVBAR
+    ============================ -->
 
-        <h1>Who's watching?</h1>
+    <nav class="navbar">
 
-        <!-- הפרופילים ייטענו דינמית מהשרת -->
-        <div class="profiles">
+        <div class="left">
+
+            <img
+                src="/assets/logo.png"
+                class="logo-img"
+                alt="Retro Logo"
+                onclick="window.location.href='/'"
+            />
 
         </div>
 
-        <!-- הוספת פרסונה חדשה -->
+        <div class="right">
+
+            <button id="logoutBtn">
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </nav>
+
+    <!-- ===========================
+            PROFILES
+    ============================ -->
+
+    <div class="container">
+
+        <h1>
+
+            Who's Watching?
+
+        </h1>
+
+        <div class="profiles">
+
+            <!-- Profiles load dynamically -->
+
+        </div>
+
+        <!-- ===========================
+                ADD PERSONA
+        ============================ -->
+
         <div class="add-persona">
 
             <input
+
                 type="text"
+
                 id="personaName"
+
                 placeholder="New persona name"
+
             >
 
             <button id="addPersonaBtn">
+
                 Add Persona
+
             </button>
 
         </div>

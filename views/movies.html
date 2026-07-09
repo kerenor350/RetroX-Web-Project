@@ -20,6 +20,7 @@
                 src="/assets/logo.png"
                 class="logo-img"
                 alt="logo"
+                onclick="location.href='/'"
             />
 
             <ul class="menu">
@@ -73,7 +74,33 @@
         <div id="movies-container"></div>
 
     </div>
+<div id="editMovieModal" class="modal">
 
+    <div class="modal-content">
+
+        <h2>Edit Movie</h2>
+
+        <input
+            id="editMovieTitle"
+            type="text"
+            placeholder="Movie title">
+
+        <input
+            id="editMovieImage"
+            type="text"
+            placeholder="Image path">
+
+        <button onclick="saveMovie()">
+            Save
+        </button>
+
+        <button onclick="closeEditMovie()">
+            Cancel
+        </button>
+
+    </div>
+
+</div>
     <script src="/js/movies.js"></script>
 
 </body>
