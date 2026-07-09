@@ -16,12 +16,12 @@
         />
 
         <ul class="menu">
-          <li>Home</li>
-          <li>Movies</li>
-          <li>TV Shows</li>
-          <li>My List</li>
-          <li>Popular</li>
-        </ul>
+    <li onclick="goHome()">Home</li>
+    <li onclick="goMovies()">Movies</li>
+    <li>TV Shows</li>
+    <li>My List</li>
+    <li>Popular</li>
+</ul>
       </div>
 
       <div class="right">
@@ -52,7 +52,38 @@
 </div>
     </nav>
     <h2 id="currentPersona"></h2>
+
     <div id="feed-container"></div>
+    <div id="reviewModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2>Write Your Review</h2>
+
+        <input
+            id="reviewTitle"
+            type="text"
+            placeholder="Review title">
+
+        <textarea
+            id="reviewContent"
+            placeholder="Share your experience..."></textarea>
+
+        <button id="publishReview">
+
+            Publish
+
+        </button>
+
+        <button onclick="closeReviewForm()">
+
+            Cancel
+
+        </button>
+
+    </div>
+
+</div>
     <script src="/js/mainPage.js"></script>
   </body>
 </html>

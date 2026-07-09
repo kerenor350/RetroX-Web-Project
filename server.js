@@ -4,6 +4,8 @@ const session = require("express-session");
 const authRoutes = require("./routes/authRoutes");
 const personaRoutes = require("./routes/personaRoutes");
 const movieRoutes = require("./routes/movieRoutes");
+const postRoutes =
+    require("./routes/postRoutes");
 require("dotenv").config();
 
 const connectDB = require("./config/db");
@@ -31,6 +33,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(authRoutes);
 app.use(personaRoutes);
 app.use(movieRoutes);
+app.use(postRoutes);
 
 function checkLogin(req, res, next) {
 
@@ -71,6 +74,13 @@ app.get("/main", (req, res) => {
         path.join(__dirname, "views", "mainPage.html")
     );
 });
+app.get("/movies", (req, res) => {
+
+    res.sendFile(
+        path.join(__dirname, "views", "movies.html")
+    );
+
+});
 
 
 
@@ -89,3 +99,4 @@ connectDB();
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+

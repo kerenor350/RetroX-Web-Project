@@ -1,10 +1,17 @@
+console.log("Persona:", localStorage.getItem("selectedPersona"));
 const profileImage =
     localStorage.getItem("selectedPersonaImage");
 
-document.querySelector(".profile-img").src =
-    profileImage;
+if (profileImage) {
+    document.querySelector(".profile-img").src =
+        profileImage;
+}
 const persona =
     localStorage.getItem("selectedPersona");
+
+if (!persona) {
+    window.location.href = "/";
+}
 
 document.querySelector("#currentPersona")
     .textContent =
@@ -13,7 +20,7 @@ document.querySelector("#currentPersona")
 fetch(`/movies/${persona}`)
     .then(response => response.json())
     .then(movies => {
-
+         console.log("Movies:", movies);
         movies.sort((a, b) =>
             a.title.localeCompare(b.title)
         );
@@ -30,7 +37,7 @@ fetch(`/movies/${persona}`)
              >
 
                 <img
-                    src="${movie.image}"
+                    src="/${movie.image}"
                     alt="${movie.title}"
                     class="movie-img"
                 >
@@ -49,11 +56,22 @@ fetch(`/movies/${persona}`)
 
                 </button>
                 <button
+    class="review-btn"
+    onclick="openReviewForm('${movie.title}')">
+
+    ✍️ Write Review
+
+</button>
+                <button
     class="delete-btn"
     onclick="deleteMovie('${movie._id}')"
 >
     🗑 Delete
 </button>
+<div
+    class="reviews"
+    id="reviews-${movie.title}">
+</div>
 
             </div>
 
@@ -63,6 +81,7 @@ fetch(`/movies/${persona}`)
         activateLikeButtons();
 
         activateSearch();
+        loadReviews();
 
     });
 
@@ -203,5 +222,185 @@ async function deleteMovie(id) {
         alert(result.message);
 
     }
+
+}
+let selectedMovie = "";
+
+function openReviewForm(movie){
+
+    selectedMovie = movie;
+
+    document
+        .getElementById("reviewModal")
+        .style.display="flex";
+
+}
+
+function closeReviewForm(){
+
+    document
+        .getElementById("reviewModal")
+        .style.display="none";
+
+}
+document
+    .getElementById("publishReview")
+    .addEventListener("click", publishReview);
+
+async function publishReview() {
+    console.log("Publish clicked");
+    
+
+    const title =
+        document.getElementById("reviewTitle").value;
+
+    const content =
+        document.getElementById("reviewContent").value;
+
+    const author =
+        localStorage.getItem("selectedPersona");
+
+    const response = await fetch("/posts", {
+
+        method: "POST",
+
+        headers: {
+
+            "Content-Type": "application/json"
+
+        },
+
+        body: JSON.stringify({
+
+            title,
+            content,
+            author,
+            movie: selectedMovie
+
+        })
+
+    });
+
+    const result =
+        await response.json();
+
+    if(result.success){
+
+        alert("Review published!");
+
+        closeReviewForm();
+
+        document.getElementById("reviewTitle").value="";
+        document.getElementById("reviewContent").value="";
+
+    }
+
+    else{
+
+        alert(result.message);
+
+    }
+
+};
+
+async function loadReviews() {
+
+    const response =
+        await fetch("/posts");
+
+    const posts =
+        await response.json();
+
+    posts.forEach(post => {
+
+        const container =
+            document.getElementById(
+                "reviews-" + post.movie
+            );
+
+        if (!container)
+            return;
+      const created = new Date(post.createdAt)
+    .toLocaleDateString("he-IL");
+
+    const updated = new Date(post.updatedAt)
+    .toLocaleDateString("he-IL");
+     container.innerHTML += `
+
+<div
+    class="review-card"
+    id="post-${post._id}">
+
+    <h4>${post.title}</h4>
+
+    <p>${post.content}</p>
+
+    <p class="review-author">
+    👤 ${post.author}
+</p>
+
+<p class="review-date">
+    📅 ${created}
+</p>
+
+<p class="review-date">
+    ✏️ Updated: ${updated}
+</p>
+
+    <br>
+
+    <button
+        class="delete-review-btn"
+        onclick="deleteReview('${post._id}')">
+
+        🗑 Delete Review
+
+    </button>
+
+</div>
+
+`});
+}
+async function deleteReview(id) {
+
+    const confirmDelete =
+        confirm("Delete this review?");
+
+    if (!confirmDelete)
+        return;
+
+    const response =
+        await fetch("/posts/" + id, {
+
+            method: "DELETE"
+
+        });
+
+    const result =
+        await response.json();
+
+    if (result.success) {
+
+        document
+            .getElementById("post-" + id)
+            .remove();
+
+    }
+
+    else {
+
+        alert(result.message);
+
+    }
+
+}function goHome() {
+
+    window.location.href = "/main";
+
+}
+
+function goMovies() {
+
+    window.location.href = "/movies";
 
 }

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Movies</title>
+
+   <link rel="stylesheet" href="/css/mainPage.css">
+<link rel="stylesheet" href="/css/movies.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="left">
+
+            <img
+                src="/assets/logo.png"
+                class="logo-img"
+                alt="logo"
+            />
+
+            <ul class="menu">
+
+                <li onclick="window.location.href='/main'">Home</li>
+                <li onclick="window.location.href='/movies'">Movies</li>
+                <li>TV Shows</li>
+                <li>My List</li>
+                <li>Popular</li>
+
+            </ul>
+
+        </div>
+
+        <div class="right">
+
+            <div class="search-container">
+
+                <img
+                    src="/assets/search icon.png"
+                    class="search-icon"
+                />
+
+                <input
+                    type="text"
+                    id="search-input"
+                    class="search-input"
+                    placeholder="Search..."
+                />
+
+            </div>
+
+            <img
+                src="/assets/man1.jpg"
+                class="profile-img"
+                alt="profile"
+            />
+
+            <button id="logoutBtn">
+                Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+    <div style="margin-top:90px;">
+
+        <h1>All Movies</h1>
+
+        <div id="movies-container"></div>
+
+    </div>
+
+    <script src="/js/movies.js"></script>
+
+</body>
+
+</html>

@@ -89,9 +89,37 @@ async function deleteMovie(req, res) {
 }
 
 
+
+async function getAllMovies(req, res) {
+
+    try {
+
+        const movies = await Movie.aggregate([
+    {
+        $group: {
+            _id: "$title",
+            title: { $first: "$title" },
+            image: { $first: "$image" },
+            likes: { $first: "$likes" }
+        }
+    }
+]);
+
+        res.json(movies);
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
+
+}
 module.exports = {
     getMovies,
+    getAllMovies,
     createMovie,
     deleteMovie
-
 };

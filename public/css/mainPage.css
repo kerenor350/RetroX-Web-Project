@@ -1,241 +1,563 @@
+/* ===========================
+   General
+=========================== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding-top: 70px;
+    background: #111;
+}
+
+/* ===========================
+   Navbar
+=========================== */
+
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-  background-color: #141414;
-  padding: 10px 40px;
+    background-color: #141414;
 
-  position: fixed;
-  top: 0;
-  width: 100%;
+    padding: 10px 40px;
+
+    position: fixed;
+    top: 0;
+    width: 100%;
+
+    z-index: 1000;
 }
 
-/* צד שמאל */
+/* Left */
+
 .left {
-  display: flex;
-  align-items: center;
-  gap: 30px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
 }
 
-/*logo-size*/
 .logo-img {
-  height: 40px;
+    height: 40px;
 }
 
-/* תפריט */
+/* Menu */
+
 .menu {
-  display: flex;
-  gap: 20px;
-  list-style: none;
-  color: white;
+    display: flex;
+    gap: 20px;
+
+    list-style: none;
+
+    color: white;
 }
 
 .menu li {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .menu li:hover {
-  color: #22a39f;
-}
-* {
-  box-sizing: border-box;
+    color: #22a39f;
 }
 
-/* שלא יכסה את הדף */
-body {
-  margin: 0;
-  padding-top: 70px;
-}
-/* צד ימין (container) */
+/* Right */
+
 .right {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
+
+/* ===========================
+   Search
+=========================== */
 
 .search-container {
-  position: relative;
-  display: flex;
-  align-items: center;
+    position: relative;
+    display: flex;
+    align-items: center;
 }
 
-/* האייקון */
 .search-icon {
-  width: 28px;
-  cursor: pointer;
+    width: 28px;
+    cursor: pointer;
 }
 
-/* שדה חיפוש */
 .search-input {
-  width: 0;
-  opacity: 0;
-  margin-left: 10px;
-  padding: 6px;
-  border-radius: 4px;
-  border: none;
 
-  transition: 0.3s;
+    width: 0;
+
+    opacity: 0;
+
+    margin-left: 10px;
+
+    padding: 6px;
+
+    border: none;
+
+    border-radius: 4px;
+
+    transition: .3s;
+
 }
 
-/*open search line when clicked*/
 .search-container:hover .search-input {
-  width: 150px;
-  opacity: 1;
+
+    width: 150px;
+
+    opacity: 1;
+
 }
 
-/*profile picture*/
+/* ===========================
+   Profile
+=========================== */
+
 .profile-img {
-  width: 35px;
-  height: 35px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-#feed-container{
 
-    display:flex;
+    width: 35px;
 
-   flex-wrap:wrap;
+    height: 35px;
 
-    justify-content:center;
+    border-radius: 5px;
 
-    gap:30px;
+    cursor: pointer;
 
-    padding:100px 40px;
 }
 
-.movie-card{
+/* ===========================
+   Feed
+=========================== */
 
-    width:100%;
-    max-width:250px;
+#feed-container {
 
-    min-height:150px;
+    display: flex;
 
-    padding:20px;
+    flex-wrap: wrap;
 
-    border-radius:15px;
+    justify-content: center;
+
+    gap: 30px;
+
+    padding: 100px 40px;
+
 }
 
-.movie-card:hover{
+.movie-card {
 
-    transform:scale(1.02);
+    width: 100%;
+
+    max-width: 250px;
+
+    min-height: 150px;
+
+    padding: 20px;
+
+    border-radius: 15px;
+
 }
-
-.like-btn{
-
-    background-color:#333;
+.movie-card h2{
 
     color:white;
 
-    border:none;
-
-    padding:10px 15px;
-
-    border-radius:10px;
-
-    cursor:pointer;
-
-    display:flex;
-
-    align-items:center;
-
-    gap:8px;
-
-    transition:0.3s;
 }
 
-.liked{
+.movie-card:hover {
 
-    background-color:red;
-}
+    transform: scale(1.02);
 
-.heart{
-
-    display:inline-block;
-
-    transition:0.3s;
-
-    font-size:20px;
-}
-
-.heart-animation{
-
-    transform:scale(1.5);
 }
 
 .movie-img {
+
     width: 100%;
+
     height: 140px;
+
     object-fit: cover;
+
     border-radius: 12px;
+
     margin-bottom: 12px;
+
 }
-@media (max-width: 768px) {
 
-  .navbar {
-    flex-direction: column;
-    gap: 15px;
-  }
+/* ===========================
+   Like Button
+=========================== */
 
-  .left {
-    flex-direction: column;
-    gap: 10px;
-  }
+.like-btn {
 
-  .menu {
-    flex-wrap: wrap;
+    background: #333;
+
+    color: white;
+
+    border: none;
+
+    padding: 10px 15px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    transition: .3s;
+
+}
+
+.liked {
+
+    background: red;
+
+}
+
+.heart {
+
+    display: inline-block;
+
+    transition: .3s;
+
+    font-size: 20px;
+
+}
+
+.heart-animation {
+
+    transform: scale(1.5);
+
+}
+
+/* ===========================
+   Review Button
+=========================== */
+
+.review-btn {
+
+    margin-top: 10px;
+
+    width: 100%;
+
+    padding: 8px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    background: #22a39f;
+
+    color: white;
+
+}
+
+.review-btn:hover {
+
+    background: #18837f;
+
+}
+
+/* ===========================
+   Delete Button
+=========================== */
+
+.delete-btn {
+
+    margin-top: 10px;
+
+    width: 100%;
+
+    padding: 8px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    background: #b30000;
+
+    color: white;
+
+}
+
+.delete-btn:hover {
+
+    background: #e60000;
+
+}
+
+/* ===========================
+   Logout
+=========================== */
+
+#logoutBtn {
+
+    margin-left: 15px;
+
+    padding: 8px 14px;
+
+    background: #d62828;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+}
+
+#logoutBtn:hover {
+
+    background: #b51f1f;
+
+}
+
+/* ===========================
+   Modal
+=========================== */
+
+.modal {
+
+    display: none;
+
+    position: fixed;
+
+    left: 0;
+
+    top: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    background: rgba(0,0,0,.7);
+
     justify-content: center;
-    padding: 0;
-  }
 
-  .search-input {
-    width: 150px;
-    opacity: 1;
-  }
-}
-#logoutBtn{
-
-    margin-left:15px;
-    padding:8px 14px;
-
-    background:#d62828;
-    color:white;
-
-    border:none;
-    border-radius:6px;
-
-    cursor:pointer;
-    font-weight:bold;
+    align-items: center;
 
 }
 
-#logoutBtn:hover{
+.modal-content {
 
-    background:#b51f1f;
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 12px;
+
+    width: 400px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
 
 }
-.delete-btn{
 
-    margin-top:10px;
+.modal-content input,
+.modal-content textarea {
+
+    padding: 10px;
+
+    font-size: 16px;
+
+}
+
+/* ===========================
+   Reviews
+=========================== */
+
+.review-card{
+
+    background:#ffffff;
+
+    border-radius:12px;
+
+    padding:15px;
+
+    margin-top:15px;
+
+    box-shadow:0 4px 10px rgba(0,0,0,.2);
+
+}
+
+.review-card h4{
+
+    margin:0 0 10px;
+
+    color:#222;
+
+    font-size:18px;
+
+}
+
+.review-card p{
+
+    margin:6px 0;
+
+}
+
+.review-author{
+
+    color:#444;
+
+    font-weight:600;
+
+    font-size:14px;
+
+}
+
+.review-date{
+
+    color:#777;
+
+    font-size:12px;
+
+}
+
+.delete-review-btn{
+
+    margin-top:15px;
 
     width:100%;
 
-    padding:8px;
+    padding:10px;
 
     border:none;
 
     border-radius:8px;
 
-    cursor:pointer;
-
-    background:#b30000;
+    background:#c00000;
 
     color:white;
 
+    font-weight:bold;
+
+    cursor:pointer;
+
 }
 
-.delete-btn:hover{
+.delete-review-btn:hover{
 
-    background:#e60000;
+    background:#900000;
+
+}
+
+.review-card h4 {
+
+    margin: 0;
+
+}
+
+.review-card p {
+
+    margin: 8px 0;
+
+}
+
+.delete-review-btn {
+
+    margin-top: 10px;
+
+    background: #c00000;
+
+    color: white;
+
+    border: none;
+
+    padding: 8px 12px;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+}
+
+.delete-review-btn:hover {
+
+    background: #8f0000;
+
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media (max-width:768px){
+
+    .navbar{
+
+        flex-direction: column;
+
+        gap: 15px;
+
+    }
+
+    .left{
+
+        flex-direction: column;
+
+        gap: 10px;
+
+    }
+
+    .menu{
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        padding: 0;
+
+    }
+
+    .search-input{
+
+        width: 150px;
+
+        opacity: 1;
+
+    }
+
+    #feed-container{
+
+        padding: 20px;
+
+        gap: 20px;
+
+    }
+
+}
+#currentPersona{
+
+    color:white;
+
+    margin-left:40px;
+
+}
+.review-card small{
+
+    display:block;
+
+    margin-top:5px;
+
+    color:#666;
+
+    font-size:13px;
 
 }
