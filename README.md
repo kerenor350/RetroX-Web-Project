@@ -96,16 +96,20 @@ git clone <repository-url>
 npm install
 ```
 
-3. Create a `.env` file
+3. Create a `.env` file (copy from `.env.example`)
 
 ```text
-MONGO_URI=your_mongodb_connection_string
+PORT=5000
+MONGO_URI=mongodb://127.0.0.1:27017/netflix
 ```
+
+For **MongoDB Atlas**, replace `MONGO_URI` with your Atlas connection string.
 
 4. Seed the database
 
 ```bash
-node seedMovies.js
+npm run seed:admin
+npm run seed:movies
 ```
 
 5. Start the server
@@ -117,7 +121,7 @@ npm start
 6. Open the browser
 
 ```
-http://localhost:3000
+http://localhost:5000
 ```
 
 ---

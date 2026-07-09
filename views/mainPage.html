@@ -9,7 +9,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1.0">
 
-    <title>Retro</title>
+    <title>Retro – Personal Feed</title>
 
     <link
         rel="stylesheet"
@@ -38,9 +38,13 @@
 
                 <li>TV Shows</li>
 
-                <li>My List</li>
+                <li onclick="scrollToSection('my-list-section')">My List</li>
 
-                <li>Popular</li>
+                <li onclick="scrollToSection('top-popular')">Popular</li>
+
+                <li onclick="scrollToSection('search-section')">Search</li>
+
+                <li onclick="scrollToSection('analytics-section')">Analytics</li>
 
             </ul>
 
@@ -88,9 +92,364 @@
 
     </nav>
 
-    <h2 id="currentPersona"></h2>
+    <header class="feed-hero">
 
-    <div id="feed-container"></div>
+        <h1 id="currentPersona"></h1>
+
+        <p class="feed-subtitle">
+            Your personal feed
+        </p>
+
+    </header>
+
+    <section class="search-analytics-section" id="search-section">
+
+        <h2 class="section-title">🔍 Advanced Search</h2>
+
+        <div class="search-panels">
+
+            <div class="search-panel">
+
+                <h3>Search 1: All Movies</h3>
+                <p class="search-hint">Category + Year + Min Rating (likes)</p>
+
+                <div class="search-form">
+
+                    <select id="search1-category" required>
+                        <option value="">Select category</option>
+                        <option value="Action">Action</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Sci-Fi">Sci-Fi</option>
+                        <option value="Drama">Drama</option>
+                    </select>
+
+                    <input
+                        id="search1-year"
+                        type="number"
+                        placeholder="Year *"
+                        min="1990"
+                        max="2030"
+                        required
+                    >
+
+                    <input
+                        id="search1-minLikes"
+                        type="number"
+                        placeholder="Min rating (likes) *"
+                        min="0"
+                        required
+                    >
+
+                    <button id="search1-btn" class="search-btn">
+                        Search
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="search-panel">
+
+                <h3>Search 2: My List</h3>
+                <p class="search-hint">Category + Year + Min Rating for current persona</p>
+
+                <div class="search-form">
+
+                    <select id="search2-category" required>
+                        <option value="">Select category</option>
+                        <option value="Action">Action</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Sci-Fi">Sci-Fi</option>
+                        <option value="Drama">Drama</option>
+                    </select>
+
+                    <input
+                        id="search2-year"
+                        type="number"
+                        placeholder="Year *"
+                        min="1990"
+                        max="2030"
+                        required
+                    >
+
+                    <input
+                        id="search2-minLikes"
+                        type="number"
+                        placeholder="Min rating (likes) *"
+                        min="0"
+                        required
+                    >
+
+                    <button id="search2-btn" class="search-btn">
+                        Search
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="search-results-header">
+
+            <h3 id="search-results-title">Search Results</h3>
+
+            <span id="search-results-count"></span>
+
+        </div>
+
+        <div class="feed-row" id="search-results"></div>
+
+    </section>
+
+    <section class="search-analytics-section" id="analytics-section">
+
+        <h2 class="section-title">📊 MongoDB GroupBy Analytics</h2>
+
+        <div class="analytics-panels">
+
+            <div class="analytics-panel">
+
+                <h3>Most Watched by Category</h3>
+
+                <table class="analytics-table">
+
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Total Views</th>
+                            <th>Unique Movies</th>
+                            <th>Completed</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="analytics-by-category"></tbody>
+
+                </table>
+
+            </div>
+
+            <div class="analytics-panel">
+
+                <h3>View Count by Persona</h3>
+
+                <table class="analytics-table">
+
+                    <thead>
+                        <tr>
+                            <th>Persona</th>
+                            <th>Views</th>
+                            <th>Completed</th>
+                            <th>Watch Time (sec)</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="analytics-by-persona"></tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <main id="feed-container">
+
+        <section
+            class="feed-section"
+            id="continue-watching-section"
+            style="display:none;">
+
+            <h2 class="section-title">
+                ▶ Continue Watching
+            </h2>
+
+            <div
+                class="feed-row"
+                id="continue-watching">
+            </div>
+
+        </section>
+
+        <section class="feed-section">
+
+            <h2 class="section-title">
+                ✨ Recommended For You
+            </h2>
+
+            <div
+                class="feed-row"
+                id="recommendations">
+            </div>
+
+        </section>
+
+        <section
+            class="feed-section"
+            id="top-popular">
+
+            <h2 class="section-title">
+                🔥 Top 10 Most Popular
+            </h2>
+
+            <div
+                class="feed-row"
+                id="top-popular-row">
+            </div>
+
+        </section>
+
+        <section class="feed-section">
+
+            <h2 class="section-title">
+                💥 Action
+            </h2>
+
+            <div
+                class="feed-row"
+                id="category-action">
+            </div>
+
+        </section>
+
+        <section class="feed-section">
+
+            <h2 class="section-title">
+                😂 Comedy
+            </h2>
+
+            <div
+                class="feed-row"
+                id="category-comedy">
+            </div>
+
+        </section>
+
+        <section class="feed-section">
+
+            <h2 class="section-title">
+                🚀 Sci-Fi
+            </h2>
+
+            <div
+                class="feed-row"
+                id="category-scifi">
+            </div>
+
+        </section>
+
+        <section class="feed-section">
+
+            <h2 class="section-title">
+                🎭 Drama
+            </h2>
+
+            <div
+                class="feed-row"
+                id="category-drama">
+            </div>
+
+        </section>
+
+        <section class="feed-section" id="my-list-section">
+
+            <h2 class="section-title">
+                📋 My List
+            </h2>
+
+            <div
+                class="feed-row"
+                id="my-list">
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- ===========================
+            CONTENT DETAIL MODAL
+    ============================ -->
+
+    <div id="detailModal" class="modal">
+
+        <div class="modal-content detail-modal">
+
+            <span
+                class="close"
+                onclick="closeDetailModal()"
+            >
+                &times;
+            </span>
+
+            <div class="detail-header">
+
+                <img
+                    id="detailImage"
+                    class="detail-img"
+                    alt="">
+
+                <div class="detail-info">
+
+                    <h2 id="detailTitle"></h2>
+
+                    <p id="detailCategory" class="detail-category"></p>
+
+                    <div class="detail-rating">
+
+                        <span id="detailStars"></span>
+
+                        <span id="detailLikes"></span>
+
+                    </div>
+
+                    <p id="detailDescription"></p>
+
+                    <div class="detail-actions">
+
+                        <button
+                            id="detailWatchBtn"
+                            class="watch-btn">
+
+                            ▶ Watch Now
+
+                        </button>
+
+                        <button
+                            id="detailReviewBtn"
+                            class="review-btn">
+
+                            ✍️ Write Review
+
+                        </button>
+
+                        <button
+                            id="detailLikeBtn"
+                            class="like-btn">
+
+                            <span class="heart">❤️</span>
+
+                            <span id="detailLikesCount">0</span>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="detail-reviews">
+
+                <h3>Reviews & Comments</h3>
+
+                <div id="detailReviewsList"></div>
+
+            </div>
+
+        </div>
+
+    </div>
 
     <!-- ===========================
             REVIEW MODAL
@@ -142,7 +501,7 @@
 
     <div id="videoModal" class="modal">
 
-        <div class="modal-content">
+        <div class="modal-content video-modal-content">
 
             <span
 
@@ -150,10 +509,8 @@
 
                 onclick="closeVideo()"
 
-                style="cursor:pointer;font-size:32px;align-self:flex-end;">
-
+            >
                 &times;
-
             </span>
 
             <h2 id="videoTitle"></h2>
@@ -167,9 +524,6 @@
                 width="100%"
 
             >
-
-                <source src="" type="video/mp4">
-
             </video>
 
         </div>

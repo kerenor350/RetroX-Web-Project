@@ -25,6 +25,22 @@ const movieSchema = new mongoose.Schema({
     video: {
         type: String,
         default: "assets/demo.mp4"
+    },
+
+    category: {
+        type: String,
+        enum: ["Action", "Comedy", "Sci-Fi", "Drama"],
+        default: "Drama"
+    },
+
+    year: {
+        type: Number,
+        default: 2022
+    },
+
+    description: {
+        type: String,
+        default: ""
     }
 
 }, {

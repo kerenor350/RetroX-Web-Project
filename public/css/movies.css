@@ -20,9 +20,122 @@ body{
 
     text-align:center;
 
-    margin:30px 0;
+    margin:30px 0 10px;
 
     font-size:42px;
+
+}
+
+.movies-page{
+
+    padding: 0 30px 40px;
+
+}
+
+.movies-search-section{
+
+    max-width: 900px;
+
+    margin: 0 auto 30px;
+
+    background: #1a1a1a;
+
+    border-radius: 12px;
+
+    padding: 20px;
+
+}
+
+.movies-search-section .section-title{
+
+    color: white;
+
+    margin: 0 0 8px;
+
+    font-size: 1.3rem;
+
+}
+
+.movies-search-form{
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+}
+
+.movies-search-form select,
+.movies-search-form input{
+
+    flex: 1 1 140px;
+
+    padding: 10px;
+
+    border: 1px solid #333;
+
+    border-radius: 8px;
+
+    background: #111;
+
+    color: white;
+
+}
+
+.movies-search-count{
+
+    color: #888;
+
+    margin: 12px 0 0;
+
+    font-size: 0.9rem;
+
+}
+
+.reset-btn{
+
+    padding: 10px 20px;
+
+    background: #444;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+}
+
+.reset-btn:hover{
+
+    background: #555;
+
+}
+
+.movie-meta{
+
+    color: #aaa;
+
+    font-size: 0.9rem;
+
+    margin: 0 0 10px;
+
+}
+
+.empty-row{
+
+    width: 100%;
+
+    text-align: center;
+
+    color: #888;
+
+    font-style: italic;
 
 }
 

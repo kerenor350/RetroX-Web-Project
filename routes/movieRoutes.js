@@ -28,6 +28,12 @@ router.post(
     movieController.createMovie
 );
 
+router.post(
+    "/movies/:id/like",
+    checkLogin,
+    movieController.likeMovie
+);
+
 router.put(
     "/movies/:id",
     checkAdmin,

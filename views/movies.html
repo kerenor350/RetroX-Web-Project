@@ -67,9 +67,53 @@
 
     </nav>
 
-    <div style="margin-top:90px;">
+    <div class="movies-page">
 
-        <h1>All Movies</h1>
+        <h1 class="page-title">All Movies</h1>
+
+        <section class="movies-search-section">
+
+            <h2 class="section-title">🔍 Search Movies</h2>
+            <p class="search-hint">Category + Year + Min Rating (likes)</p>
+
+            <div class="search-form movies-search-form">
+
+                <select id="movies-category" required>
+                    <option value="">Select category</option>
+                    <option value="Action">Action</option>
+                    <option value="Comedy">Comedy</option>
+                    <option value="Sci-Fi">Sci-Fi</option>
+                    <option value="Drama">Drama</option>
+                </select>
+
+                <input
+                    id="movies-year"
+                    type="number"
+                    placeholder="Year *"
+                    min="1990"
+                    max="2030"
+                >
+
+                <input
+                    id="movies-minLikes"
+                    type="number"
+                    placeholder="Min rating (likes) *"
+                    min="0"
+                >
+
+                <button id="movies-search-btn" class="search-btn">
+                    Search
+                </button>
+
+                <button id="movies-reset-btn" class="reset-btn">
+                    Show All
+                </button>
+
+            </div>
+
+            <p id="movies-search-count" class="movies-search-count"></p>
+
+        </section>
 
         <div id="movies-container"></div>
 

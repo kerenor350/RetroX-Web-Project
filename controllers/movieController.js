@@ -155,12 +155,63 @@ async function getAllMovies(req, res) {
 
 }
 
+async function likeMovie(req, res) {
+
+    try {
+
+        const movie = await Movie.findByIdAndUpdate(
+
+            req.params.id,
+
+            {
+                $inc: { likes: 1 }
+            },
+
+            {
+                returnDocument: "after"
+            }
+
+        );
+
+        if (!movie) {
+
+            return res.status(404).json({
+
+                success: false,
+                message: "Movie not found"
+
+            });
+
+        }
+
+        res.json({
+
+            success: true,
+            likes: movie.likes,
+            movie
+
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+
+            success: false,
+            message: error.message
+
+        });
+
+    }
+
+}
+
 module.exports = {
 
     getMovies,
     getAllMovies,
     createMovie,
     updateMovie,
-    deleteMovie
+    deleteMovie,
+    likeMovie
 
 };
