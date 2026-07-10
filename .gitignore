@@ -1,2 +1,10 @@
 node_modules/
+logs/*.log
+
+# Secrets — never commit real credentials
 .env
+.env.*
+!.env.example
+
+# Local presentation notes (not for repository)
+PRESENTATION-GUIDE.md

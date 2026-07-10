@@ -1,28 +1,99 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
     <title>Profiles</title>
 
-    <link rel="stylesheet" href="/css/variables.css">
-    <link rel="stylesheet" href="/css/profiles.css">
+    <link
+        rel="stylesheet"
+        href="/css/variables.css">
+
+    <link
+        rel="stylesheet"
+        href="/css/mainPage.css">
+
+    <link
+        rel="stylesheet"
+        href="/css/fonts.css">
+
+    <link
+        rel="stylesheet"
+        href="/css/layout.css">
+
+    <link
+        rel="stylesheet"
+        href="/css/profiles.css">
+
+    <link
+        rel="stylesheet"
+        href="/css/navbar.css">
+
 </head>
 
 <body>
 
-    <div class="container">
+    <!-- ===========================
+            NAVBAR
+    ============================ -->
 
-        <h1>Who's watching?</h1>
+    <nav class="navbar">
 
-        <!-- הפרופילים ייטענו דינמית מהשרת -->
-        <div class="profiles">
+        <div class="left">
+
+            <a class="logo-link" href="/">
+                <img
+                    src="/assets/logo.png"
+                    class="logo-img"
+                    alt="Retro Logo"
+                >
+            </a>
 
         </div>
 
-        <!-- הוספת פרסונה חדשה -->
-        <div class="add-persona">
+        <div class="right">
+
+            <button id="logoutBtn">
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </nav>
+
+    <!-- ===========================
+            PROFILES
+    ============================ -->
+
+    <header class="profiles-header">
+
+        <h1>Who's Watching?</h1>
+
+    </header>
+
+    <section class="container">
+
+        <div class="profiles">
+
+            <!-- Profiles load dynamically -->
+
+        </div>
+
+        <!-- ===========================
+                ADD PERSONA
+        ============================ -->
+
+        <div class="add-persona-panel">
+
+            <h3 class="add-persona-title">Add Persona</h3>
 
             <input
                 type="text"
@@ -30,14 +101,27 @@
                 placeholder="New persona name"
             >
 
-            <button id="addPersonaBtn">
-                Add Persona
-            </button>
+            <p class="avatar-picker-label">Choose avatar</p>
+
+            <div class="avatar-options" id="avatarOptions"></div>
+
+            <button id="addPersonaBtn">Add Persona</button>
 
         </div>
 
-    </div>
+    </section>
 
+    <footer class="site-footer">
+
+        <p class="footer-brand">RetroX</p>
+
+        <p>Web Development Project — HTML5 · CSS3 · JavaScript · MongoDB</p>
+
+        <p>&copy; 2026 Anna Sasporta &amp; Keren Or Lebovitch</p>
+
+    </footer>
+
+    <script src="/js/navbar.js"></script>
     <script src="/js/profiles.js"></script>
 
 </body>

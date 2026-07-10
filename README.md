@@ -1,135 +1,93 @@
-# RetroX – Web Development Assignment 4
+# RetroX — Final Project
 
-## Project Description
+**Web Development Course**  
+**Authors:** Anna Sasporta & Keren Or Lebovitch
 
-RetroX is a Netflix-style streaming web application developed as part of the Web Development course.
+RetroX is a Netflix-style streaming web application built with a full **MVC architecture**, **MongoDB**, **express-session**, and a rich client-side UI.
 
-This project demonstrates the transition from a simple server-side application to a structured MVC architecture while integrating MongoDB as the database.
-
-The application allows users to log in, choose a persona, browse movies, add new movies, and delete existing movies asynchronously without refreshing the page.
-
----
-
-## Technologies
-
-* HTML5
-* CSS3
-* JavaScript
-* Node.js
-* Express.js
-* MongoDB
-* Mongoose
-* Express Session
-
----
-
-## MVC Architecture
-
-The project follows the MVC (Model–View–Controller) design pattern.
-
-### Models
-
-Contains the database models using Mongoose.
-
-* movie.model.js
-* persona.model.js
-* userModel.js
-
-### Controllers
-
-Contains the application logic.
-
-* authController.js
-* movieController.js
-* personaController.js
-
-### Routes
-
-Defines the API endpoints.
-
-* authRoutes.js
-* movieRoutes.js
-* personaRoutes.js
-
-### Views
-
-Contains the HTML pages.
-
-* loginPage.html
-* profiles.html
-* mainPage.html
-
-### Public
-
-Contains all static files.
-
-* CSS
-* JavaScript
-* Images
+📄 **Full documentation (Hebrew):** [FINAL-PROJECT.md](./FINAL-PROJECT.md)
 
 ---
 
 ## Features
 
-* User Login
-* Session Management
-* Persona Selection
-* Display Movies
-* Add Movie
-* Delete Movie using Fetch API
-* MongoDB Integration
-* Dynamic Content Loading
+- User login / register / logout with **bcrypt** + **session**
+- **Personas** — CRUD watch profiles per user
+- Personal **feed** — recommendations, Top 10, categories, My List
+- **Continue Watching** — resume playback from saved position
+- **Like**, reviews, and detail modal
+- **Advanced search** — category + year + min rating
+- **Admin analytics** — MongoDB `$group` reports + D3 charts + user search
+- **External API** — OMDb (IMDB data)
+- **Filming locations map** — Leaflet + MongoDB
 
 ---
 
-## Installation
+## Tech Stack
 
-1. Clone the repository
+HTML5 · CSS3 · JavaScript · Node.js · Express 5 · MongoDB · Mongoose · express-session · bcrypt · D3.js · Leaflet · OMDb API
 
-```bash
-git clone <repository-url>
-```
+---
 
-2. Install dependencies
+## Quick Start
 
 ```bash
+git clone https://github.com/kerenor350/WebDev.git
+cd WebDev
+git checkout step10
 npm install
 ```
 
-3. Create a `.env` file
+Create `.env` (see `.env.example`):
 
-```text
-MONGO_URI=your_mongodb_connection_string
+```env
+PORT=5000
+MONGO_URI=mongodb://127.0.0.1:27017/netflix
+OMDB_API_KEY=your_omdb_api_key
 ```
 
-4. Seed the database
-
 ```bash
-node seedMovies.js
-```
-
-5. Start the server
-
-```bash
+npm run seed:demo
 npm start
 ```
 
-6. Open the browser
+Open **http://localhost:5000**
+
+### Demo Login
+
+| User | Password | Role |
+|------|----------|------|
+| `keren` | `retro1234` | user |
+| `admin` | `retro1234` | admin |
+
+---
+
+## Project Structure
 
 ```
-http://localhost:3000
+models/        → Mongoose schemas (User, Persona, Movie, WatchHistory, Post)
+controllers/   → Business logic
+routes/        → API endpoints
+middleware/    → Auth, logging, error handling
+views/         → HTML pages
+public/        → CSS, JS, images, video
+server.js      → Entry point
 ```
 
 ---
 
-## Database
+## Pages
 
-MongoDB is used to store movie data.
-
-The application performs CRUD operations through Mongoose.
+| URL | Description |
+|-----|-------------|
+| `/` | Login & Register |
+| `/profiles` | Manage personas |
+| `/main` | Feed, search, My List, analytics |
+| `/movies` | Full catalog + admin CRUD |
+| `/map` | Filming locations map |
 
 ---
 
-## Author
+## License
 
-Keren Or
+ISC

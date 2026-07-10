@@ -1,241 +1,1242 @@
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* ===========================
+   General
+=========================== */
 
-  background-color: #141414;
-  padding: 10px 40px;
-
-  position: fixed;
-  top: 0;
-  width: 100%;
-}
-
-/* צד שמאל */
-.left {
-  display: flex;
-  align-items: center;
-  gap: 30px;
-}
-
-/*logo-size*/
-.logo-img {
-  height: 40px;
-}
-
-/* תפריט */
-.menu {
-  display: flex;
-  gap: 20px;
-  list-style: none;
-  color: white;
-}
-
-.menu li {
-  cursor: pointer;
-}
-
-.menu li:hover {
-  color: #22a39f;
-}
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
-/* שלא יכסה את הדף */
 body {
-  margin: 0;
-  padding-top: 70px;
-}
-/* צד ימין (container) */
-.right {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+    margin: 0;
+    background: #111;
 }
 
-.search-container {
-  position: relative;
-  display: flex;
-  align-items: center;
+/* ===========================
+   Feed Hero
+=========================== */
+
+.feed-hero {
+
+    padding: 20px 40px 0;
+
 }
 
-/* האייקון */
-.search-icon {
-  width: 28px;
-  cursor: pointer;
+.feed-subtitle {
+
+    color: #888;
+
+    margin: 0 0 10px 40px;
+
 }
 
-/* שדה חיפוש */
-.search-input {
-  width: 0;
-  opacity: 0;
-  margin-left: 10px;
-  padding: 6px;
-  border-radius: 4px;
-  border: none;
+/* ===========================
+   Feed Sections
+=========================== */
 
-  transition: 0.3s;
+#feed-container {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 40px;
+
+    padding: 20px 0 60px;
+
 }
 
-/*open search line when clicked*/
-.search-container:hover .search-input {
-  width: 150px;
-  opacity: 1;
+.feed-section {
+
+    width: 100%;
+
 }
 
-/*profile picture*/
-.profile-img {
-  width: 35px;
-  height: 35px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-#feed-container{
+.section-title {
 
-    display:flex;
+    color: white;
 
-   flex-wrap:wrap;
+    font-size: 1.4rem;
 
-    justify-content:center;
+    margin: 0 0 16px;
 
-    gap:30px;
-
-    padding:100px 40px;
 }
 
-.movie-card{
+.feed-row {
 
-    width:100%;
-    max-width:250px;
+    display: flex;
 
-    min-height:150px;
+    gap: 16px;
 
-    padding:20px;
+    overflow-x: auto;
 
-    border-radius:15px;
+    padding-bottom: 10px;
+
+    scroll-behavior: smooth;
+
 }
 
-.movie-card:hover{
+.feed-row::-webkit-scrollbar {
 
-    transform:scale(1.02);
+    height: 6px;
+
 }
 
-.like-btn{
+.feed-row::-webkit-scrollbar-thumb {
 
-    background-color:#333;
+    background: #444;
 
-    color:white;
+    border-radius: 3px;
 
-    border:none;
-
-    padding:10px 15px;
-
-    border-radius:10px;
-
-    cursor:pointer;
-
-    display:flex;
-
-    align-items:center;
-
-    gap:8px;
-
-    transition:0.3s;
 }
 
-.liked{
+.empty-row {
 
-    background-color:red;
+    color: #666;
+
+    font-style: italic;
+
+    margin: 0;
+
 }
 
-.heart{
+/* ===========================
+   Feed Cards
+=========================== */
 
-    display:inline-block;
+.feed-card {
 
-    transition:0.3s;
+    position: relative;
 
-    font-size:20px;
+    flex: 0 0 180px;
+
+    cursor: pointer;
+
+    border-radius: 8px;
+
+    overflow: hidden;
+
+    transition: transform .25s;
+
 }
 
-.heart-animation{
+.feed-card:hover {
 
-    transform:scale(1.5);
+    transform: scale(1.08);
+
+    z-index: 2;
+
+}
+
+.feed-card-img {
+
+    width: 100%;
+
+    height: 260px;
+
+    object-fit: cover;
+
+    display: block;
+
+}
+
+.feed-card-overlay {
+
+    position: absolute;
+
+    bottom: 0;
+
+    left: 0;
+
+    right: 0;
+
+    padding: 30px 10px 10px;
+
+    background: linear-gradient(transparent, rgba(0,0,0,.85));
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+}
+
+.feed-card-title {
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+}
+
+.feed-card-likes {
+
+    color: #ccc;
+
+    font-size: 12px;
+
+}
+
+.rank-badge {
+
+    position: absolute;
+
+    top: 8px;
+
+    left: 8px;
+
+    background: #e50914;
+
+    color: white;
+
+    font-weight: bold;
+
+    font-size: 18px;
+
+    width: 32px;
+
+    height: 32px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: 1;
+
+    pointer-events: none;
+
+}
+
+.progress-bar {
+
+    position: absolute;
+
+    bottom: 0;
+
+    left: 0;
+
+    right: 0;
+
+    height: 4px;
+
+    background: rgba(255,255,255,.3);
+
+    z-index: 2;
+
+}
+
+.progress-fill {
+
+    height: 100%;
+
+    background: #e50914;
+
+    transition: width .3s;
+
+}
+
+/* Legacy movie-card (movies page) */
+
+.movie-card {
+
+    width: 100%;
+
+    max-width: 250px;
+
+    min-height: 150px;
+
+    padding: 20px;
+
+    border-radius: 15px;
+
+}
+
+.movie-card h2 {
+
+    color: white;
+
+}
+
+.movie-card:hover {
+
+    transform: scale(1.02);
+
 }
 
 .movie-img {
+
     width: 100%;
+
     height: 140px;
+
     object-fit: cover;
+
     border-radius: 12px;
+
     margin-bottom: 12px;
+
 }
-@media (max-width: 768px) {
 
-  .navbar {
-    flex-direction: column;
-    gap: 15px;
-  }
+/* ===========================
+   Like Button
+=========================== */
 
-  .left {
-    flex-direction: column;
-    gap: 10px;
-  }
+.like-btn {
 
-  .menu {
-    flex-wrap: wrap;
+    background: #333;
+
+    color: white;
+
+    border: none;
+
+    padding: 10px 15px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    transition: .3s;
+
+}
+
+.liked {
+
+    background: red;
+
+}
+
+.heart {
+
+    display: inline-block;
+
+    transition: .3s;
+
+    font-size: 20px;
+
+}
+
+.heart-animation {
+
+    transform: scale(1.5);
+
+}
+
+/* ===========================
+   Review Button
+=========================== */
+
+.review-btn {
+
+    margin-top: 10px;
+
+    width: 100%;
+
+    padding: 8px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    background: #22a39f;
+
+    color: white;
+
+}
+
+.review-btn:hover {
+
+    background: #18837f;
+
+}
+
+/* ===========================
+   Delete Button
+=========================== */
+
+.delete-btn {
+
+    margin-top: 10px;
+
+    width: 100%;
+
+    padding: 8px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    background: #b30000;
+
+    color: white;
+
+}
+
+.delete-btn:hover {
+
+    background: #e60000;
+
+}
+
+/* ===========================
+   Modal
+=========================== */
+
+.modal {
+
+    display: none;
+
+    position: fixed;
+
+    left: 0;
+
+    top: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    background: rgba(0,0,0,.7);
+
     justify-content: center;
-    padding: 0;
-  }
 
-  .search-input {
-    width: 150px;
-    opacity: 1;
-  }
-}
-#logoutBtn{
+    align-items: center;
 
-    margin-left:15px;
-    padding:8px 14px;
-
-    background:#d62828;
-    color:white;
-
-    border:none;
-    border-radius:6px;
-
-    cursor:pointer;
-    font-weight:bold;
+    z-index: 5000;
 
 }
 
-#logoutBtn:hover{
+.modal-content {
 
-    background:#b51f1f;
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 12px;
+
+    width: 400px;
+
+    max-width: 95vw;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
+
+    position: relative;
 
 }
-.delete-btn{
 
-    margin-top:10px;
+.detail-modal {
+
+    width: 700px;
+
+}
+
+.detail-header {
+
+    display: flex;
+
+    gap: 20px;
+
+}
+
+.detail-img {
+
+    width: 200px;
+
+    height: 280px;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+
+    flex-shrink: 0;
+
+}
+
+.detail-info {
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+}
+
+.detail-info h2 {
+
+    margin: 0;
+
+    color: #222;
+
+}
+
+.detail-category {
+
+    color: #22a39f;
+
+    font-weight: 600;
+
+    margin: 0;
+
+}
+
+.detail-rating {
+
+    display: flex;
+
+    gap: 12px;
+
+    align-items: center;
+
+}
+
+#detailStars {
+
+    color: #f5c518;
+
+    font-size: 18px;
+
+    letter-spacing: 2px;
+
+}
+
+#detailLikes {
+
+    color: #666;
+
+    font-size: 14px;
+
+}
+
+#detailDescription {
+
+    color: #444;
+
+    line-height: 1.5;
+
+    margin: 0;
+
+}
+
+.detail-actions {
+
+    display: flex;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+    margin-top: auto;
+
+}
+
+.detail-actions .watch-btn,
+.detail-actions .review-btn,
+.detail-actions .my-list-btn,
+.detail-actions .like-btn {
+
+    width: auto;
+
+    margin-top: 0;
+
+    padding: 10px 18px;
+
+}
+
+.my-list-btn {
+
+    background: #2a2a2a;
+
+    color: white;
+
+    border: 1px solid #444;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+}
+
+.my-list-btn:hover:not(:disabled) {
+
+    background: #22a39f;
+
+    border-color: #22a39f;
+
+}
+
+.my-list-btn.in-list,
+.my-list-btn:disabled {
+
+    background: #1a3a38;
+
+    border-color: #22a39f;
+
+    color: #22a39f;
+
+    cursor: default;
+
+    opacity: 0.9;
+
+}
+
+.detail-reviews {
+
+    border-top: 1px solid #eee;
+
+    padding-top: 16px;
+
+}
+
+.detail-reviews h3 {
+
+    margin: 0 0 12px;
+
+    color: #222;
+
+}
+
+.no-reviews {
+
+    color: #888;
+
+    font-style: italic;
+
+    margin: 0;
+
+}
+
+.video-modal-content {
+
+    width: 800px;
+
+    background: #111;
+
+    color: white;
+
+}
+
+.video-modal-content h2 {
+
+    color: white;
+
+    margin: 0 0 10px;
+
+}
+
+.close {
+
+    position: absolute;
+
+    top: 12px;
+
+    right: 18px;
+
+    font-size: 28px;
+
+    cursor: pointer;
+
+    color: #999;
+
+    z-index: 10;
+
+}
+
+.close:hover {
+
+    color: white;
+
+}
+
+.modal-content input,
+.modal-content textarea {
+
+    padding: 10px;
+
+    font-size: 16px;
+
+}
+
+/* ===========================
+   Reviews
+=========================== */
+
+.review-card{
+
+    background:#ffffff;
+
+    border-radius:12px;
+
+    padding:15px;
+
+    margin-top:15px;
+
+    box-shadow:0 4px 10px rgba(0,0,0,.2);
+
+}
+
+.review-card h4{
+
+    margin:0 0 10px;
+
+    color:#222;
+
+    font-size:18px;
+
+}
+
+.review-card p{
+
+    margin:6px 0;
+
+}
+
+.review-author{
+
+    color:#444;
+
+    font-weight:600;
+
+    font-size:14px;
+
+}
+
+.review-date{
+
+    color:#777;
+
+    font-size:12px;
+
+}
+
+.delete-review-btn{
+
+    margin-top:15px;
 
     width:100%;
 
-    padding:8px;
+    padding:10px;
 
     border:none;
 
     border-radius:8px;
 
-    cursor:pointer;
-
-    background:#b30000;
+    background:#c00000;
 
     color:white;
 
+    font-weight:bold;
+
+    cursor:pointer;
+
 }
 
-.delete-btn:hover{
+.delete-review-btn:hover{
 
-    background:#e60000;
+    background:#900000;
+
+}
+
+.review-card h4 {
+
+    margin: 0;
+
+}
+
+.review-card p {
+
+    margin: 8px 0;
+
+}
+
+.delete-review-btn {
+
+    margin-top: 10px;
+
+    background: #c00000;
+
+    color: white;
+
+    border: none;
+
+    padding: 8px 12px;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+}
+
+.delete-review-btn:hover {
+
+    background: #8f0000;
+
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media (max-width:768px){
+
+    .search-input{
+
+        width: 150px;
+
+        opacity: 1;
+
+    }
+
+    #feed-container{
+
+        padding: 20px;
+
+        gap: 20px;
+
+    }
+
+    .feed-card {
+
+        flex: 0 0 140px;
+
+    }
+
+    .feed-card-img {
+
+        height: 200px;
+
+    }
+
+    .detail-header {
+
+        flex-direction: column;
+
+    }
+
+    .detail-img {
+
+        width: 100%;
+
+        height: 200px;
+
+    }
+
+    .detail-modal {
+
+        width: 95vw;
+
+    }
+
+}
+#currentPersona{
+
+    color:white;
+
+    margin-left:40px;
+
+}
+.review-card small{
+
+    display:block;
+
+    margin-top:5px;
+
+    color:#666;
+
+    font-size:13px;
+
+}
+.watch-btn{
+
+    margin-top:10px;
+
+    width:100%;
+
+    padding:10px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#e50914;
+
+    color:white;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.watch-btn:hover{
+
+    background:#b20710;
+
+}
+
+/* ===========================
+   Advanced Search & Analytics
+=========================== */
+
+.search-analytics-section {
+
+    padding: 0 0 30px;
+
+    margin-bottom: 8px;
+
+}
+
+.search-analytics-section:first-child {
+
+    padding-top: 0;
+
+    margin-bottom: 24px;
+
+    border-bottom: 1px solid #2a2a2a;
+
+    padding-bottom: 28px;
+
+}
+
+#search-section .section-title {
+
+    text-align: center;
+
+}
+
+.search-panels {
+
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    max-width: 720px;
+
+    margin: 0 auto;
+
+    gap: 24px;
+
+}
+
+.analytics-panels {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 24px;
+
+}
+
+.search-panel,
+.analytics-panel {
+
+    background: #1a1a1a;
+
+    border-radius: 12px;
+
+    padding: 20px;
+
+}
+
+.search-panel h3 {
+
+    color: #22a39f;
+
+    margin: 0 0 8px;
+
+    font-size: 1rem;
+
+    text-align: center;
+
+}
+
+.analytics-panel h3 {
+
+    color: #22a39f;
+
+    margin: 0 0 8px;
+
+    font-size: 1rem;
+
+}
+
+.user-search-panel {
+
+    margin-bottom: 24px;
+
+}
+
+.user-search-form {
+
+    margin-bottom: 12px;
+
+}
+
+.user-search-count {
+
+    color: #aaa;
+
+    font-size: 0.9rem;
+
+    margin: 0 0 12px;
+
+}
+
+.search-hint {
+
+    color: #888;
+
+    font-size: 0.85rem;
+
+    margin: 0 0 16px;
+
+}
+
+.search-panel .search-hint {
+
+    text-align: center;
+
+}
+
+.search-form {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+}
+
+.search-form select,
+.search-form input {
+
+    flex: 1 1 140px;
+
+    padding: 10px;
+
+    border: 1px solid #333;
+
+    border-radius: 8px;
+
+    background: #111;
+
+    color: white;
+
+}
+
+.search-btn {
+
+    padding: 10px 20px;
+
+    background: #22a39f;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+}
+
+.search-btn:hover {
+
+    background: #18837f;
+
+}
+
+.search-results-header {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 16px;
+
+    margin: 24px auto 12px;
+
+    max-width: 720px;
+
+}
+
+.search-results-header h3 {
+
+    color: white;
+
+    margin: 0;
+
+}
+
+#search-results-count {
+
+    color: #888;
+
+}
+
+.analytics-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    color: white;
+
+}
+
+.analytics-table th,
+.analytics-table td {
+
+    padding: 10px 12px;
+
+    text-align: left;
+
+    border-bottom: 1px solid #333;
+
+}
+
+.analytics-table th {
+
+    color: #22a39f;
+
+    font-size: 0.85rem;
+
+}
+
+.analytics-table td {
+
+    font-size: 0.9rem;
+
+}
+
+@media (max-width: 768px) {
+
+    .search-panels,
+    .analytics-panels {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .search-analytics-section {
+
+        padding: 0 20px 20px;
+
+    }
+
+}
+
+.admin-create-section {
+
+    background: #1a1a1a;
+
+    border-radius: 12px;
+
+    padding: 20px;
+
+    margin-bottom: 24px;
+
+    color: white;
+
+}
+
+.admin-create-form {
+
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+
+    gap: 10px;
+
+}
+
+.admin-create-form select,
+.admin-create-form input,
+.admin-create-form textarea {
+
+    padding: 10px;
+
+    border: 1px solid #333;
+
+    border-radius: 8px;
+
+    background: #111;
+
+    color: white;
+
+}
+
+.admin-create-form textarea {
+
+    grid-column: 1 / -1;
+
+    min-height: 80px;
+
+}
+
+.feed-card {
+
+    position: relative;
+
+}
+
+.my-list-remove-btn {
+
+    position: absolute;
+
+    top: 8px;
+
+    right: 8px;
+
+    z-index: 3;
+
+    background: rgba(229, 9, 20, 0.9);
+
+    color: white;
+
+    border: none;
+
+    border-radius: 6px;
+
+    padding: 4px 8px;
+
+    font-size: 0.75rem;
+
+    cursor: pointer;
 
 }

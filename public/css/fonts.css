@@ -1,0 +1,20 @@
+@font-face {
+    font-family: "RetroTitle";
+    src: url("https://fonts.gstatic.com/s/bebasneue/v14/JTUWjIg69CK48gW7PXoo9W5h.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1,
+h2,
+.section-title,
+.page-title,
+.site-aside h2 {
+    font-family: "RetroTitle", Arial, sans-serif;
+    letter-spacing: 1px;
+}

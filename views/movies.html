@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Movies</title>
+
+    <link rel="stylesheet" href="/css/mainPage.css">
+    <link rel="stylesheet" href="/css/fonts.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/movies.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="left">
+
+            <a class="logo-link" href="/">
+                <img
+                    src="/assets/logo.png"
+                    class="logo-img"
+                    alt="RetroX logo"
+                >
+            </a>
+
+            <ul class="menu">
+
+                <li onclick="window.location.href='/main'">Home</li>
+                <li onclick="window.location.href='/movies'">Movies</li>
+                <li onclick="window.location.href='/map'">Map</li>
+                <li>TV Shows</li>
+                <li onclick="goToMyList()">My List</li>
+                <li>Popular</li>
+
+            </ul>
+
+        </div>
+
+        <div class="right">
+
+            <div class="search-container">
+
+                <img
+                    src="/assets/search icon.png"
+                    class="search-icon"
+                />
+
+                <input
+                    type="text"
+                    id="search-input"
+                    class="search-input"
+                    placeholder="Search..."
+                />
+
+            </div>
+
+            <img
+                src="/assets/man1.jpg"
+                class="profile-img"
+                alt="profile"
+            />
+
+            <button id="logoutBtn">
+                Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+    <header class="movies-header">
+
+        <h1 class="page-title">All Movies</h1>
+
+    </header>
+
+    <div class="movies-page">
+
+        <section id="admin-create-section" class="admin-create-section" style="display:none;">
+
+            <h2 class="section-title">➕ Admin: Add Movie / Series</h2>
+
+            <form id="create-catalog-form" class="admin-create-form">
+
+                <select id="create-contentType" required>
+                    <option value="Movie">Movie</option>
+                    <option value="Series">Series</option>
+                </select>
+
+                <input id="create-title" type="text" placeholder="Title *" required>
+
+                <input id="create-image" type="text" placeholder="Image path (e.g. assets/movie.png) *" required>
+
+                <select id="create-category" required>
+                    <option value="">Category *</option>
+                    <option value="Action">Action</option>
+                    <option value="Comedy">Comedy</option>
+                    <option value="Sci-Fi">Sci-Fi</option>
+                    <option value="Drama">Drama</option>
+                </select>
+
+                <input id="create-year" type="number" placeholder="Year *" min="1990" max="2030" required>
+
+                <input id="create-persona" type="text" placeholder="Default list persona (optional)">
+
+                <textarea id="create-description" placeholder="Description"></textarea>
+
+                <button type="submit" class="search-btn">Create</button>
+
+            </form>
+
+            <p id="create-catalog-message" class="location-message"></p>
+
+        </section>
+
+        <section class="movies-search-section">
+
+            <h2 class="section-title">🔍 Search Movies</h2>
+            <p class="search-hint">Category + Year + Min Rating (likes)</p>
+
+            <div class="search-form movies-search-form">
+
+                <select id="movies-category" required>
+                    <option value="">Select category</option>
+                    <option value="Action">Action</option>
+                    <option value="Comedy">Comedy</option>
+                    <option value="Sci-Fi">Sci-Fi</option>
+                    <option value="Drama">Drama</option>
+                </select>
+
+                <input
+                    id="movies-year"
+                    type="number"
+                    placeholder="Year *"
+                    min="1990"
+                    max="2030"
+                >
+
+                <input
+                    id="movies-minLikes"
+                    type="number"
+                    placeholder="Min rating (likes) *"
+                    min="0"
+                >
+
+                <button id="movies-search-btn" class="search-btn">
+                    Search
+                </button>
+
+                <button id="movies-reset-btn" class="reset-btn">
+                    Show All
+                </button>
+
+            </div>
+
+            <p id="movies-search-count" class="movies-search-count"></p>
+
+        </section>
+
+        <div id="movies-container"></div>
+
+    </div>
+
+    <footer class="site-footer">
+
+        <p class="footer-brand">RetroX</p>
+
+        <p>Web Development Project — HTML5 · CSS3 · JavaScript · MongoDB</p>
+
+        <p>&copy; 2026 Anna Sasporta &amp; Keren Or Lebovitch</p>
+
+    </footer>
+
+<div id="editMovieModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2>Edit Movie</h2>
+
+        <input
+            id="editMovieTitle"
+            type="text"
+            placeholder="Movie title">
+
+        <input
+            id="editMovieImage"
+            type="text"
+            placeholder="Image path">
+
+        <button onclick="saveMovie()">
+            Save
+        </button>
+
+        <button onclick="closeEditMovie()">
+            Cancel
+        </button>
+
+    </div>
+
+</div>
+    <script src="/js/navbar.js"></script>
+    <script src="/js/movies.js"></script>
+
+</body>
+
+</html>

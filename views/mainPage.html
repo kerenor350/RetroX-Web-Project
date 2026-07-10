@@ -1,58 +1,712 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MainPage</title>
-    <link rel="stylesheet" href="/css/mainPage.css" />
-  </head>
-  <body>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Retro – Personal Feed</title>
+
+    <link
+        rel="stylesheet"
+        href="/css/mainPage.css">
+
+    <link
+        rel="stylesheet"
+        href="/css/fonts.css">
+
+    <link
+        rel="stylesheet"
+        href="/css/layout.css">
+
+    <link
+        rel="stylesheet"
+        href="/css/navbar.css">
+
+</head>
+
+<body>
+
     <nav class="navbar">
-      <div class="left">
-        <img
-          src="/assets/logo.png"
-          class="logo-img"
-          alt="logo"
-        />
 
-        <ul class="menu">
-          <li>Home</li>
-          <li>Movies</li>
-          <li>TV Shows</li>
-          <li>My List</li>
-          <li>Popular</li>
-        </ul>
-      </div>
+        <div class="left">
 
-      <div class="right">
+            <a class="logo-link" href="/">
+                <img
+                    src="/assets/logo.png"
+                    class="logo-img"
+                    alt="RetroX logo"
+                >
+            </a>
 
-    <div class="search-container">
+            <ul class="menu">
 
-        <img src="/assets/search icon.png" class="search-icon" />
+                <li onclick="goHome()">Home</li>
 
-        <input
-            type="text"
-            id="search-input"
-            class="search-input"
-            placeholder="Search..."
-        />
+                <li onclick="goMovies()">Movies</li>
+
+                <li onclick="window.location.href='/map'">Map</li>
+
+                <li>TV Shows</li>
+
+                <li onclick="scrollToSection('search-section')">Search</li>
+
+                <li onclick="scrollToSection('my-list-section')">My List</li>
+
+                <li onclick="scrollToSection('top-popular')">Popular</li>
+
+                <li onclick="scrollToSection('imdb-sidebar')">IMDB</li>
+
+                <li onclick="scrollToSection('analytics-section')">Analytics</li>
+
+            </ul>
+
+        </div>
+
+        <div class="right">
+
+            <div class="search-container">
+
+                <img
+                    src="/assets/search icon.png"
+                    class="search-icon">
+
+                <input
+
+                    type="text"
+
+                    id="search-input"
+
+                    class="search-input"
+
+                    placeholder="Search..."
+
+                >
+
+            </div>
+
+            <img
+
+                src="/assets/man1.jpg"
+
+                class="profile-img"
+
+                alt="profile"
+
+            >
+
+            <button id="logoutBtn">
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </nav>
+
+    <header class="feed-hero">
+
+        <h1 id="currentPersona"></h1>
+
+        <p class="feed-subtitle">
+            Your personal feed
+        </p>
+
+    </header>
+
+    <div class="main-layout">
+
+        <aside class="site-aside">
+
+            <h2>Quick Nav</h2>
+
+            <ul>
+                <li onclick="scrollToSection('search-section')">Search</li>
+                <li onclick="scrollToSection('continue-watching-section')">Continue Watching</li>
+                <li onclick="scrollToSection('top-popular')">Popular</li>
+                <li onclick="scrollToSection('my-list-section')">My List</li>
+                <li onclick="scrollToSection('imdb-sidebar')">IMDB</li>
+                <li onclick="scrollToSection('analytics-section')">Analytics</li>
+            </ul>
+
+            <div class="imdb-sidebar" id="imdb-sidebar">
+
+                <div class="imdb-sidebar-header">
+
+                    <span class="imdb-logo">IMDb</span>
+
+                    <span class="imdb-tag">OMDb API</span>
+
+                </div>
+
+                <p class="imdb-sidebar-desc">
+                    Compare RetroX titles with real IMDB data
+                </p>
+
+                <div class="imdb-search-form">
+
+                    <select id="imdb-movie-select"></select>
+
+                    <button id="imdb-load-btn" class="imdb-load-btn">
+                        Load
+                    </button>
+
+                </div>
+
+                <div id="imdb-widget" class="imdb-widget">
+                    Select a movie to load IMDB information.
+                </div>
+
+            </div>
+
+            <div class="aside-chart-block">
+
+                <h2>Views Chart</h2>
+
+                <canvas
+                    id="stats-canvas"
+                    width="180"
+                    height="120"
+                ></canvas>
+
+            </div>
+
+        </aside>
+
+        <div class="main-content">
+
+    <section class="search-analytics-section" id="search-section">
+
+        <h2 class="section-title">🔍 Advanced Search</h2>
+
+        <div class="search-panels">
+
+            <div class="search-panel">
+
+                <h3>Search Movies</h3>
+                <p class="search-hint">Category + Year + Min Rating (likes)</p>
+
+                <div class="search-form">
+
+                    <select id="search1-category" required>
+                        <option value="">Select category</option>
+                        <option value="Action">Action</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Sci-Fi">Sci-Fi</option>
+                        <option value="Drama">Drama</option>
+                    </select>
+
+                    <input
+                        id="search1-year"
+                        type="number"
+                        placeholder="Year *"
+                        min="1990"
+                        max="2030"
+                        required
+                    >
+
+                    <input
+                        id="search1-minLikes"
+                        type="number"
+                        placeholder="Min rating (likes) *"
+                        min="0"
+                        required
+                    >
+
+                    <button id="search1-btn" class="search-btn">
+                        Search
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="search-results-header">
+
+            <h3 id="search-results-title">Search Results</h3>
+
+            <span id="search-results-count"></span>
+
+        </div>
+
+        <div class="feed-row" id="search-results"></div>
+
+    </section>
+
+    <main id="feed-container">
+
+        <section
+            class="feed-section"
+            id="continue-watching-section"
+            style="display:none;">
+
+            <h2 class="section-title">
+                ▶ Continue Watching
+            </h2>
+
+            <div
+                class="feed-row"
+                id="continue-watching">
+            </div>
+
+        </section>
+
+        <section class="feed-section">
+
+            <h2 class="section-title">
+                ✨ Recommended For You
+            </h2>
+
+            <div
+                class="feed-row"
+                id="recommendations">
+            </div>
+
+        </section>
+
+        <section
+            class="feed-section"
+            id="top-popular">
+
+            <h2 class="section-title">
+                🔥 Top 10 Most Popular
+            </h2>
+
+            <div
+                class="feed-row"
+                id="top-popular-row">
+            </div>
+
+        </section>
+
+        <section class="feed-section">
+
+            <h2 class="section-title">
+                💥 Action
+            </h2>
+
+            <div
+                class="feed-row"
+                id="category-action">
+            </div>
+
+        </section>
+
+        <section class="feed-section">
+
+            <h2 class="section-title">
+                😂 Comedy
+            </h2>
+
+            <div
+                class="feed-row"
+                id="category-comedy">
+            </div>
+
+        </section>
+
+        <section class="feed-section">
+
+            <h2 class="section-title">
+                🚀 Sci-Fi
+            </h2>
+
+            <div
+                class="feed-row"
+                id="category-scifi">
+            </div>
+
+        </section>
+
+        <section class="feed-section">
+
+            <h2 class="section-title">
+                🎭 Drama
+            </h2>
+
+            <div
+                class="feed-row"
+                id="category-drama">
+            </div>
+
+        </section>
+
+        <section class="feed-section" id="my-list-section">
+
+            <h2 class="section-title">
+                📋 My List
+            </h2>
+
+            <div
+                class="feed-row"
+                id="my-list">
+            </div>
+
+        </section>
+
+    </main>
+
+    <section class="search-analytics-section" id="analytics-section">
+
+        <div id="admin-analytics-block">
+
+            <h2 class="section-title">📊 Admin Reports (MongoDB)</h2>
+
+            <div class="analytics-panel user-search-panel">
+
+                <h3>🔍 Search Users</h3>
+
+                <p class="search-hint">Username + Role + Min Personas</p>
+
+                <div class="search-form user-search-form">
+
+                    <input
+                        id="user-search-q"
+                        type="text"
+                        placeholder="Username *"
+                        required>
+
+                    <select id="user-search-role">
+
+                        <option value="">All roles</option>
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+
+                    </select>
+
+                    <input
+                        id="user-search-min-personas"
+                        type="number"
+                        min="0"
+                        placeholder="Min personas">
+
+                    <button
+                        id="user-search-btn"
+                        class="search-btn"
+                        type="button">
+
+                        Search
+
+                    </button>
+
+                </div>
+
+                <p id="user-search-count" class="user-search-count"></p>
+
+                <table class="analytics-table">
+
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Role</th>
+                            <th>Personas</th>
+                            <th>Views</th>
+                            <th>My List</th>
+                            <th>Joined</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="user-search-results">
+                        <tr>
+                            <td colspan="6">Enter a username and click Search.</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <div class="analytics-panels">
+
+                <div class="analytics-panel">
+
+                    <h3>Most Watched by Category</h3>
+
+                    <table class="analytics-table">
+
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Total Views</th>
+                                <th>Unique Movies</th>
+                                <th>Completed</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="analytics-by-category"></tbody>
+
+                    </table>
+
+                </div>
+
+                <div class="analytics-panel">
+
+                    <h3>View Count by Persona</h3>
+
+                    <table class="analytics-table">
+
+                        <thead>
+                            <tr>
+                                <th>Persona</th>
+                                <th>Views</th>
+                                <th>Completed</th>
+                                <th>Watch Time (sec)</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="analytics-by-persona"></tbody>
+
+                    </table>
+
+                </div>
+
+                <div class="analytics-panel">
+
+                    <h3>Likes by Category</h3>
+
+                    <table class="analytics-table">
+
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Total Likes</th>
+                                <th>Avg Likes</th>
+                                <th>Items</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="analytics-by-likes"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            <div class="analytics-panels d3-panels">
+
+                <div class="analytics-panel">
+
+                    <h3>D3 Chart 1 — Views by Category (MongoDB)</h3>
+
+                    <div id="d3-chart-category"></div>
+
+                </div>
+
+                <div class="analytics-panel">
+
+                    <h3>D3 Chart 2 — Views by Persona (MongoDB)</h3>
+
+                    <div id="d3-chart-persona"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+        </div>
 
     </div>
 
-    <img
-        src="/assets/man1.jpg"
-        class="profile-img"
-        alt="profile"
-    />
+    <footer class="site-footer">
 
-    <button id="logoutBtn">
-        Logout
-    </button>
+        <p class="footer-brand">RetroX</p>
 
-</div>
-    </nav>
-    <h2 id="currentPersona"></h2>
-    <div id="feed-container"></div>
+        <p>Web Development Project — HTML5 · CSS3 · JavaScript · MongoDB</p>
+
+        <p>&copy; 2026 Anna Sasporta &amp; Keren Or Lebovitch</p>
+
+    </footer>
+
+    <!-- ===========================
+            CONTENT DETAIL MODAL
+    ============================ -->
+
+    <div id="detailModal" class="modal">
+
+        <div class="modal-content detail-modal">
+
+            <span
+                class="close"
+                onclick="closeDetailModal()"
+            >
+                &times;
+            </span>
+
+            <div class="detail-header">
+
+                <img
+                    id="detailImage"
+                    class="detail-img"
+                    alt="">
+
+                <div class="detail-info">
+
+                    <h2 id="detailTitle"></h2>
+
+                    <p id="detailCategory" class="detail-category"></p>
+
+                    <div class="detail-rating">
+
+                        <span id="detailStars"></span>
+
+                        <span id="detailLikes"></span>
+
+                    </div>
+
+                    <p id="detailDescription"></p>
+
+                    <div id="detailImdbInfo" class="detail-imdb-info"></div>
+
+                    <div class="detail-actions">
+
+                        <button
+                            id="detailWatchBtn"
+                            class="watch-btn">
+
+                            ▶ Watch Now
+
+                        </button>
+
+                        <button
+                            id="detailReviewBtn"
+                            class="review-btn">
+
+                            ✍️ Write Review
+
+                        </button>
+
+                        <button
+                            id="detailMyListBtn"
+                            class="my-list-btn"
+                            type="button">
+
+                            ➕ Add to My List
+
+                        </button>
+
+                        <button
+                            id="detailLikeBtn"
+                            class="like-btn">
+
+                            <span class="heart">❤️</span>
+
+                            <span id="detailLikesCount">0</span>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="detail-reviews">
+
+                <h3>Reviews & Comments</h3>
+
+                <div id="detailReviewsList" class="reviews-columns"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ===========================
+            REVIEW MODAL
+    ============================ -->
+
+    <div id="reviewModal" class="modal">
+
+        <div class="modal-content">
+
+            <h2>Write Your Review</h2>
+
+            <input
+
+                id="reviewTitle"
+
+                type="text"
+
+                placeholder="Review title"
+
+            >
+
+            <textarea
+
+                id="reviewContent"
+
+                placeholder="Share your experience..."
+
+            ></textarea>
+
+            <button id="publishReview">
+
+                Publish
+
+            </button>
+
+            <button onclick="closeReviewForm()">
+
+                Cancel
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- ===========================
+            VIDEO MODAL
+    ============================ -->
+
+    <div id="videoModal" class="modal">
+
+        <div class="modal-content video-modal-content">
+
+            <span
+
+                class="close"
+
+                onclick="closeVideo()"
+
+            >
+                &times;
+            </span>
+
+            <h2 id="videoTitle"></h2>
+
+            <video
+
+                id="moviePlayer"
+
+                controls
+
+                width="100%"
+
+            >
+            </video>
+
+        </div>
+
+    </div>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="/js/navbar.js"></script>
     <script src="/js/mainPage.js"></script>
-  </body>
+    <script src="/js/charts.js"></script>
+
+</body>
+
 </html>

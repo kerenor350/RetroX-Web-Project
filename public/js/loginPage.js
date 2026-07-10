@@ -1,69 +1,199 @@
-<<<<<<< Updated upstream
-const form = document.querySelector("#login-form");
-const message = document.querySelector("#login-message");
+const loginForm =
+    document.getElementById("login-form");
 
-form.addEventListener("submit", function(event) {
+const registerForm =
+    document.getElementById("register-form");
 
-    event.preventDefault();
+const loginMessage =
+    document.getElementById("login-message");
 
-    const username = document.querySelector("#username").value.trim();
-    const password = document.querySelector("#password").value.trim();
+const registerMessage =
+    document.getElementById("register-message");
 
-    message.className = "";
-    message.textContent = "";
+// ===========================
+// Show Login
+// ===========================
+
+function showLogin(){
+
+    document.getElementById("loginBox").style.display = "block";
+
+    document.getElementById("registerBox").style.display = "none";
+
+}
+
+// ===========================
+// Show Register
+// ===========================
+
+function showRegister(){
+
+    document.getElementById("loginBox").style.display = "none";
+
+    document.getElementById("registerBox").style.display = "block";
+
+}
+
+// ===========================
+// LOGIN
+// ===========================
+
+loginForm.addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    loginMessage.textContent = "";
+
+    const username =
+        document.getElementById("username").value.trim();
+
+    const password =
+        document.getElementById("password").value.trim();
 
     if (username.length < 3) {
 
-        message.textContent = "Username must be at least 3 characters long.";
-        message.classList.add("error-message");
+        loginMessage.textContent =
+            "Username must be at least 3 characters long.";
+
         return;
+
     }
 
     if (password.length < 4) {
 
-        message.textContent = "Password must be at least 4 characters long.";
-        message.classList.add("error-message");
+        loginMessage.textContent =
+            "Password must be at least 4 characters long.";
+
         return;
-    }
-
-    fetch("/login", {
-
-    method: "POST",
-
-    headers: {
-        "Content-Type": "application/json"
-    },
-
-    body: JSON.stringify({
-        username: username,
-        password: password
-    })
-
-})
-.then(response => response.json())
-.then(data => {
-
-    message.textContent = data.message;
-
-    if (data.success) {
-
-        message.classList.add("success-message");
-
-        setTimeout(() => {
-
-            window.location.href = "/profiles";
-
-        }, 1000);
 
     }
 
-    else {
+    const response =
+        await fetch("/login",{
 
-        message.classList.add("error-message");
+            method:"POST",
+
+            headers:{
+
+                "Content-Type":"application/json"
+
+            },
+
+            body:JSON.stringify({
+
+                username,
+                password
+
+            })
+
+        });
+
+    const result =
+        await response.json();
+
+    loginMessage.textContent =
+        result.message;
+
+    if(result.success){
+
+        localStorage.setItem(
+
+            "role",
+
+            result.role
+
+        );
+
+        setTimeout(()=>{
+
+            window.location.href="/profiles";
+
+        },800);
 
     }
 
 });
+
+// ===========================
+// REGISTER
+// ===========================
+
+registerForm.addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    registerMessage.textContent = "";
+
+    const username =
+        document.getElementById("registerUsername").value.trim();
+
+    const password =
+        document.getElementById("registerPassword").value.trim();
+
+    const confirmPassword =
+        document.getElementById("registerPassword2").value.trim();
+
+    if (username.length < 3) {
+
+        registerMessage.textContent =
+            "Username must contain at least 3 characters.";
+
+        return;
+
+    }
+
+    if (password.length < 4) {
+
+        registerMessage.textContent =
+            "Password must contain at least 4 characters.";
+
+        return;
+
+    }
+
+    if(password !== confirmPassword){
+
+        registerMessage.textContent =
+            "Passwords do not match.";
+
+        return;
+
+    }
+
+    const response =
+        await fetch("/register",{
+
+            method:"POST",
+
+            headers:{
+
+                "Content-Type":"application/json"
+
+            },
+
+            body:JSON.stringify({
+
+                username,
+                password
+
+            })
+
+        });
+
+    const result =
+        await response.json();
+
+    registerMessage.textContent =
+        result.message;
+
+    if(result.success){
+
+        setTimeout(()=>{
+
+            showLogin();
+
+        },1000);
+
+    }
+
 });
-=======
->>>>>>> Stashed changes

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filming Locations Map</title>
+
+    <link rel="stylesheet" href="/css/mainPage.css">
+    <link rel="stylesheet" href="/css/fonts.css">
+    <link rel="stylesheet" href="/css/layout.css">
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""
+    >
+
+    <link rel="stylesheet" href="/css/map.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="left">
+
+            <a class="logo-link" href="/">
+                <img
+                    src="/assets/logo.png"
+                    class="logo-img"
+                    alt="RetroX logo"
+                >
+            </a>
+
+            <ul class="menu">
+                <li onclick="window.location.href='/main'">Home</li>
+                <li onclick="window.location.href='/movies'">Movies</li>
+                <li onclick="window.location.href='/map'">Map</li>
+            </ul>
+
+        </div>
+
+        <div class="right">
+
+            <img
+                src="/assets/man1.jpg"
+                class="profile-img"
+                alt="profile"
+            >
+
+            <button id="logoutBtn">Logout</button>
+
+        </div>
+
+    </nav>
+
+    <header class="map-header">
+
+        <h1>Filming Locations Map</h1>
+
+        <p>Locations are stored in MongoDB and displayed on an OpenStreetMap (Leaflet)</p>
+
+    </header>
+
+    <section class="map-layout">
+
+        <aside class="map-sidebar">
+
+            <h2>Manage Location</h2>
+
+            <form id="location-form" class="location-form">
+
+                <label for="location-movie">Movie</label>
+
+                <select id="location-movie" required></select>
+
+                <label for="location-address">Address</label>
+
+                <input
+                    id="location-address"
+                    type="text"
+                    placeholder="Street / landmark"
+                    required
+                >
+
+                <label for="location-city">City / Country</label>
+
+                <input
+                    id="location-city"
+                    type="text"
+                    placeholder="City, Country"
+                >
+
+                <button type="submit" class="search-btn">
+                    Save &amp; Geocode
+                </button>
+
+            </form>
+
+            <p id="location-message" class="location-message"></p>
+
+            <h2>Locations List</h2>
+
+            <ul id="locations-list" class="locations-list"></ul>
+
+        </aside>
+
+        <div class="map-content">
+
+            <div id="map"></div>
+
+        </div>
+
+    </section>
+
+    <footer class="site-footer">
+
+        <p class="footer-brand">RetroX</p>
+
+        <p>Web Development Project — HTML5 · CSS3 · JavaScript · MongoDB</p>
+
+        <p>&copy; 2026 Anna Sasporta &amp; Keren Or Lebovitch</p>
+
+    </footer>
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""
+    ></script>
+
+    <script src="/js/navbar.js"></script>
+    <script src="/js/map.js"></script>
+
+</body>
+
+</html>

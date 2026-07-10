@@ -1,73 +1,237 @@
-const users = require("../models/userModel");
+const User = require("../models/userModel");
+const bcrypt = require("bcrypt");
+const logger = require("../utils/logger");
 
-function login(req, res) {
+async function login(req, res) {
 
-    const { username, password } = req.body;
+    try {
 
-    if (!username || username.trim().length < 3) {
+        const { username, password } = req.body;
 
-        return res.json({
-            success: false,
-            message: "Username must be at least 3 characters long."
+        if (!username || username.trim().length < 3) {
+
+            return res.json({
+
+                success: false,
+                message: "Username must be at least 3 characters long."
+
+            });
+
+        }
+
+        if (!password || password.trim().length < 4) {
+
+            return res.json({
+
+                success: false,
+                message: "Password must be at least 4 characters long."
+
+            });
+
+        }
+
+        const user = await User.findOne({
+
+            username: username.trim()
+
         });
 
-    }
+        if (!user) {
 
-    if (!password || password.trim().length < 4) {
+            logger.warn(
+                `Failed login attempt for unknown user: ${username.trim()}`
+            );
 
-        return res.json({
-            success: false,
-            message: "Password must be at least 4 characters long."
-        });
+            return res.json({
 
-    }
+                success: false,
+                message: "Invalid username or password."
 
-    const user = users.find(user =>
-        user.username === username &&
-        user.password === password
-    );
+            });
 
-    if (user) {
+        }
+
+        const match = await bcrypt.compare(
+
+            password,
+
+            user.password
+
+        );
+
+        if (!match) {
+
+            logger.warn(
+                `Failed login attempt for user: ${username.trim()}`
+            );
+
+            return res.json({
+
+                success: false,
+                message: "Invalid username or password."
+
+            });
+
+        }
 
         req.session.loggedIn = true;
-        req.session.username = username;
+        req.session.username = user.username;
+        req.session.role = user.role;
+
+        logger.info(`User logged in: ${user.username} (${user.role})`);
 
         res.json({
+
             success: true,
-            message: "Login successful"
+            message: "Login successful.",
+            role: user.role
+
         });
 
-    } else {
+    }
 
-        res.json({
+    catch (error) {
+
+        logger.error("Login failed", error);
+
+        res.status(500).json({
+
             success: false,
-            message: "Invalid username or password"
+            message: error.message
+
         });
 
     }
 
 }
+
+async function register(req, res) {
+
+    try {
+
+        const { username, password } = req.body;
+
+        if (!username || username.trim().length < 3) {
+
+            return res.json({
+
+                success: false,
+                message: "Username must contain at least 3 characters."
+
+            });
+
+        }
+
+        if (!password || password.trim().length < 4) {
+
+            return res.json({
+
+                success: false,
+                message: "Password must contain at least 4 characters."
+
+            });
+
+        }
+
+        const exists = await User.findOne({
+
+            username: username.trim()
+
+        });
+
+        if (exists) {
+
+            return res.json({
+
+                success: false,
+                message: "Username already exists."
+
+            });
+
+        }
+
+        const hashedPassword = await bcrypt.hash(
+
+            password,
+
+            10
+
+        );
+
+        const user = new User({
+
+            username: username.trim(),
+
+            password: hashedPassword,
+
+            role: "user"
+
+        });
+
+        await user.save();
+
+        logger.info(`New user registered: ${user.username}`);
+
+        res.json({
+
+            success: true,
+            message: "Account created successfully."
+
+        });
+
+    }
+
+    catch (error) {
+
+        logger.error("Registration failed", error);
+
+        res.status(500).json({
+
+            success: false,
+            message: error.message
+
+        });
+
+    }
+
+}
+
 function logout(req, res) {
+
+    const username = req.session?.username || "unknown";
 
     req.session.destroy((err) => {
 
         if (err) {
 
+            logger.error("Logout failed", err);
+
             return res.status(500).json({
+
                 success: false,
                 message: "Could not logout."
+
             });
 
         }
 
+        logger.info(`User logged out: ${username}`);
+
         res.json({
+
             success: true,
             message: "Logged out successfully."
+
         });
 
     });
 
 }
+
 module.exports = {
-    login,logout
+
+    login,
+    register,
+    logout
+
 };
