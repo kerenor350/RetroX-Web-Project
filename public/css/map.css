@@ -1,194 +1,128 @@
 .map-header {
-
     text-align: center;
-
     padding: 20px;
-
     color: white;
-
 }
 
 .map-header h1 {
-
     margin: 0 0 8px;
-
 }
 
 .map-header p {
-
     color: #888;
-
     margin: 0;
-
 }
 
 .map-layout {
-
     display: flex;
-
     gap: 20px;
-
     padding: 0 30px 30px;
-
     min-height: 600px;
-
 }
 
 .map-sidebar {
-
     flex: 0 0 320px;
-
     background: #1a1a1a;
-
     border-radius: 12px;
-
     padding: 20px;
-
     color: white;
-
 }
 
 .map-sidebar h2 {
-
     color: #22a39f;
-
     font-size: 1rem;
-
     margin: 0 0 12px;
-
 }
 
 .location-form {
-
     display: flex;
-
     flex-direction: column;
-
     gap: 8px;
-
     margin-bottom: 20px;
-
 }
 
 .location-form label {
-
     font-size: 0.85rem;
-
     color: #aaa;
-
 }
 
 .location-form select,
 .location-form input {
-
     padding: 10px;
-
     border: 1px solid #333;
-
     border-radius: 8px;
-
     background: #111;
-
     color: white;
-
 }
 
 .location-message {
-
     min-height: 20px;
-
     color: #22a39f;
-
     font-size: 0.9rem;
-
     margin-bottom: 16px;
-
 }
 
 .locations-list {
-
     list-style: none;
-
     padding: 0;
-
     margin: 0;
-
     max-height: 300px;
-
     overflow-y: auto;
-
 }
 
 .locations-list li {
-
     padding: 10px 0;
-
     border-bottom: 1px solid #333;
-
     cursor: pointer;
-
     transition: color 0.3s;
-
     font-size: 0.9rem;
-
 }
 
 .locations-list li:hover {
-
     color: #22a39f;
+}
 
+.map-content {
+    flex: 1;
+    min-width: 0;
 }
 
 #map {
-
     width: 100%;
-
     height: 600px;
-
     border-radius: 12px;
-
     background: #222;
-
-    z-index: 1;
-
+    overflow: hidden;
 }
 
 .leaflet-container {
     font-family: inherit;
 }
 
-.map-content {
+#map .leaflet-pane {
+    z-index: 400 !important;
+}
 
-    flex: 1;
-
+#map .leaflet-top,
+#map .leaflet-bottom {
+    z-index: 500 !important;
 }
 
 .map-status {
-
     display: none;
-
 }
 
 @media (max-width: 900px) {
-
     .map-layout {
-
         flex-direction: column;
-
         padding: 0 20px 20px;
-
     }
 
     .map-sidebar {
-
         width: 100%;
-
     }
 
     #map {
-
         height: 400px;
-
     }
-
 }

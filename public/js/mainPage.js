@@ -58,6 +58,7 @@ function initAdminUi() {
     }
 
     loadAnalytics();
+    initUserSearch();
 
 }
 
@@ -93,6 +94,7 @@ async function loadFeed() {
         });
 
         activateSearch();
+        scrollToHashSection();
 
     } catch (error) {
 
@@ -299,11 +301,89 @@ function openDetailModal(movie) {
     const likeBtn = document.getElementById("detailLikeBtn");
     likeBtn.onclick = () => likeMovie(movie._id, likeBtn);
 
+    updateDetailMyListBtn(movie);
+
     renderDetailReviews(movie.title);
 
     loadDetailImdbInfo(movie.title);
 
     document.getElementById("detailModal").style.display = "flex";
+    document.body.style.overflow = "hidden";
+
+}
+
+function isMovieInMyList(title) {
+
+    return (feedData.myList || []).some(
+        item => item.title === title
+    );
+
+}
+
+function updateDetailMyListBtn(movie) {
+
+    const myListBtn = document.getElementById("detailMyListBtn");
+
+    if (!myListBtn) {
+        return;
+    }
+
+    if (isMovieInMyList(movie.title)) {
+
+        myListBtn.textContent = "✓ In My List";
+        myListBtn.disabled = true;
+        myListBtn.classList.add("in-list");
+        myListBtn.onclick = null;
+        return;
+
+    }
+
+    myListBtn.textContent = "➕ Add to My List";
+    myListBtn.disabled = false;
+    myListBtn.classList.remove("in-list");
+    myListBtn.onclick = () => addToMyListFromDetail(movie);
+
+}
+
+async function addToMyListFromDetail(movie) {
+
+    const myListBtn = document.getElementById("detailMyListBtn");
+
+    const response = await fetch("/movies/my-list", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+
+            title: movie.title,
+            image: movie.image,
+            persona: currentPersona
+
+        })
+
+    });
+
+    const result = await response.json();
+
+    if (!result.success) {
+
+        alert(result.message);
+        return;
+
+    }
+
+    if (myListBtn) {
+        myListBtn.textContent = "✓ In My List";
+        myListBtn.disabled = true;
+        myListBtn.classList.add("in-list");
+        myListBtn.onclick = null;
+    }
+
+    await loadFeed();
 
 }
 
@@ -388,6 +468,13 @@ function closeDetailModal() {
 
     document.getElementById("detailModal").style.display = "none";
     detailMovie = null;
+
+    const reviewOpen =
+        document.getElementById("reviewModal").style.display === "flex";
+
+    if (!reviewOpen) {
+        document.body.style.overflow = "";
+    }
 
 }
 
@@ -598,10 +685,6 @@ function initAdvancedSearch() {
         .getElementById("search1-btn")
         .addEventListener("click", runSearch1);
 
-    document
-        .getElementById("search2-btn")
-        .addEventListener("click", runSearch2);
-
 }
 
 function getSearchParams(prefix) {
@@ -644,26 +727,7 @@ async function runSearch1() {
 
     await executeSearch(
         `/search/movies?${query}`,
-        "Search 1: Category + Year + Min Rating"
-    );
-
-}
-
-async function runSearch2() {
-
-    const params = getSearchParams("search2");
-
-    if (!params) {
-        return;
-    }
-
-    params.persona = persona;
-
-    const query = new URLSearchParams(params);
-
-    await executeSearch(
-        `/search/persona-movies?${query}`,
-        `Search 2: My List (${persona}) — Category + Year + Min Rating`
+        "Search: Category + Year + Min Rating"
     );
 
 }
@@ -739,6 +803,104 @@ async function loadAnalytics() {
         console.error(error);
 
     }
+
+}
+
+function initUserSearch() {
+
+    const searchBtn = document.getElementById("user-search-btn");
+
+    if (!searchBtn) {
+        return;
+    }
+
+    searchBtn.addEventListener("click", runUserSearch);
+
+}
+
+async function runUserSearch() {
+
+    const q = document.getElementById("user-search-q").value.trim();
+    const role = document.getElementById("user-search-role").value;
+    const minPersonas =
+        document.getElementById("user-search-min-personas").value;
+
+    if (!q) {
+        alert("Enter a username to search.");
+        return;
+    }
+
+    const params = new URLSearchParams({ q });
+
+    if (role) {
+        params.set("role", role);
+    }
+
+    if (minPersonas !== "") {
+        params.set("minPersonas", minPersonas);
+    }
+
+    try {
+
+        const response = await fetch(
+            `/analytics/search-users?${params}`
+        );
+
+        const result = await response.json();
+
+        if (!result.success) {
+            alert(result.message || "User search failed.");
+            return;
+        }
+
+        document.getElementById("user-search-count").textContent =
+            `Found ${result.count} user(s)`;
+
+        renderUserSearchResults(result.users || []);
+        scrollToSection("analytics-section");
+
+    } catch (error) {
+
+        console.error(error);
+        alert("User search failed.");
+
+    }
+
+}
+
+function renderUserSearchResults(users) {
+
+    const tbody = document.getElementById("user-search-results");
+    tbody.innerHTML = "";
+
+    if (!users.length) {
+        tbody.innerHTML =
+            `<tr><td colspan="6">No users matched your search.</td></tr>`;
+        return;
+    }
+
+    users.forEach(user => {
+
+        const joined = user.joinedAt
+            ? new Date(user.joinedAt).toLocaleDateString()
+            : "—";
+
+        const personas = (user.personas || [])
+            .map(name => escapeHtml(name))
+            .join(", ") || "—";
+
+        tbody.innerHTML += `
+            <tr>
+                <td>${escapeHtml(user.username)}</td>
+                <td>${escapeHtml(user.role)}</td>
+                <td>${user.personaCount} (${personas})</td>
+                <td>${user.viewCount}</td>
+                <td>${user.myListCount}</td>
+                <td>${joined}</td>
+            </tr>
+        `;
+
+    });
 
 }
 
@@ -881,6 +1043,16 @@ function scrollToSection(sectionId) {
 
     if (section) {
         section.scrollIntoView({ behavior: "smooth" });
+    }
+
+}
+
+function scrollToHashSection() {
+
+    const sectionId = window.location.hash.replace("#", "");
+
+    if (sectionId) {
+        scrollToSection(sectionId);
     }
 
 }

@@ -60,4 +60,14 @@ router.get(
 
 );
 
+router.get(
+
+    "/analytics/search-users",
+
+    checkAdmin,
+
+    searchController.searchUsers
+
+);
+
 module.exports = router;

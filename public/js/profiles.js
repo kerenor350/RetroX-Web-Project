@@ -1,4 +1,64 @@
 // ===========================
+// Avatar Picker
+// ===========================
+
+const PERSONA_AVATARS = [
+    "assets/man1.jpg",
+    "assets/girl1.jpg",
+    "assets/woman1.jpg",
+    "assets/woman2.jpg"
+];
+
+let selectedAvatar = PERSONA_AVATARS[0];
+
+function avatarSrc(path) {
+    return encodeURI(`/${path}`);
+}
+
+function renderAvatarPicker(avatars) {
+
+    const container = document.getElementById("avatarOptions");
+
+    if (!container || !avatars.length) {
+        return;
+    }
+
+    selectedAvatar = avatars[0];
+
+    container.innerHTML = avatars.map((avatar, index) => `
+        <button
+            type="button"
+            class="avatar-option${index === 0 ? " selected" : ""}"
+            data-avatar="${avatar}"
+            title="Select avatar"
+            aria-label="Select avatar">
+            <img src="${avatarSrc(avatar)}" alt="">
+        </button>
+    `).join("");
+
+    container.querySelectorAll(".avatar-option").forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            selectedAvatar = button.dataset.avatar;
+
+            container.querySelectorAll(".avatar-option").forEach(item => {
+                item.classList.remove("selected");
+            });
+
+            button.classList.add("selected");
+
+        });
+
+    });
+
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    renderAvatarPicker(PERSONA_AVATARS);
+});
+
+// ===========================
 // Load Personas
 // ===========================
 
@@ -18,35 +78,49 @@ fetch("/personas")
 <div class="profile">
 
     <img
-        src="${persona.image}"
+        src="${avatarSrc(persona.image)}"
         width="180"
         onclick="selectPersona('${persona.name}','${persona.image}')"
+        alt="${persona.name}"
     >
 
     <p class="name">
         ${persona.name}
     </p>
 
-    <input
-        id="name-${persona._id}"
-        type="text"
-        value="${persona.name}"
-    >
+    <div class="profile-actions">
 
-    <button
-        onclick="updatePersona('${persona._id}')">
+        <div class="profile-edit-row">
 
-        💾 Save
+            <input
+                id="name-${persona._id}"
+                type="text"
+                value="${persona.name}"
+                aria-label="Persona name"
+            >
 
-    </button>
+            <button
+                class="profile-save-btn"
+                onclick="updatePersona('${persona._id}')"
+                title="Save name">
 
-    <button
-        class="delete-btn"
-        onclick="deletePersona('${persona._id}')">
+                Save
 
-        🗑 Delete
+            </button>
 
-    </button>
+        </div>
+
+        <button
+            class="profile-delete-btn"
+            onclick="deletePersona('${persona._id}')"
+            title="Remove profile">
+
+            <span class="profile-delete-icon" aria-hidden="true">✕</span>
+            Remove
+
+        </button>
+
+    </div>
 
 </div>
 
@@ -87,7 +161,8 @@ document
             },
 
             body: JSON.stringify({
-                name
+                name,
+                image: selectedAvatar
             })
 
         })

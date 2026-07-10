@@ -15,6 +15,16 @@ const {
 
 router.get(
 
+    "/personas/avatars",
+
+    checkLogin,
+
+    personaController.getPersonaAvatars
+
+);
+
+router.get(
+
     "/personas",
 
     checkLogin,

@@ -138,17 +138,22 @@ async function renderPersonaPieChart() {
 function renderImdbWidget(data, container) {
 
     const imdb = data.imdb;
+    const votes = imdb.imdbVotes
+        ? `${imdb.imdbVotes} votes`
+        : "N/A";
 
     container.innerHTML = `
-        ${data.retroxTitle ? `<p><strong>RetroX:</strong> ${data.retroxTitle}</p>` : ""}
-        <p><strong>IMDB Title:</strong> ${imdb.title} (${imdb.year})</p>
-        <p><strong>Rating:</strong> ${imdb.imdbRating || "N/A"} ⭐ (${imdb.imdbVotes || "0"} votes)</p>
-        <p><strong>Genre:</strong> ${imdb.genre || "N/A"}</p>
-        <p><strong>Director:</strong> ${imdb.director || "N/A"}</p>
-        <p><strong>Cast:</strong> ${imdb.actors || "N/A"}</p>
-        <p><strong>Plot:</strong> ${imdb.plot || "N/A"}</p>
-        <p><strong>Source:</strong> ${data.source}</p>
-        ${imdb.imdbUrl ? `<a href="${imdb.imdbUrl}" target="_blank" class="imdb-link">View on IMDB →</a>` : ""}
+        ${data.retroxTitle ? `<p class="imdb-widget-row"><strong>RetroX:</strong> ${data.retroxTitle}</p>` : ""}
+        <h4 class="imdb-widget-title">${imdb.title} <span>(${imdb.year})</span></h4>
+        <div class="imdb-widget-meta">
+            <span class="imdb-rating-badge">★ ${imdb.imdbRating || "N/A"}</span>
+            <span class="imdb-meta-chip">${votes}</span>
+            ${imdb.genre ? `<span class="imdb-meta-chip">${imdb.genre}</span>` : ""}
+        </div>
+        ${imdb.director ? `<p class="imdb-widget-row"><strong>Director:</strong> ${imdb.director}</p>` : ""}
+        ${imdb.actors ? `<p class="imdb-widget-row"><strong>Cast:</strong> ${imdb.actors}</p>` : ""}
+        ${imdb.plot ? `<p class="imdb-widget-plot">${imdb.plot}</p>` : ""}
+        ${imdb.imdbUrl ? `<a href="${imdb.imdbUrl}" target="_blank" class="imdb-link">View on IMDb →</a>` : ""}
     `;
 
 }
@@ -159,7 +164,7 @@ async function loadImdbForTitle(movieTitle, container) {
         return;
     }
 
-    container.textContent = "Loading IMDB data from external API...";
+    container.textContent = "Loading IMDB data...";
 
     try {
 

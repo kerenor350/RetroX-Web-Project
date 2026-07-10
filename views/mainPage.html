@@ -23,6 +23,10 @@
         rel="stylesheet"
         href="/css/layout.css">
 
+    <link
+        rel="stylesheet"
+        href="/css/navbar.css">
+
 </head>
 
 <body>
@@ -31,12 +35,13 @@
 
         <div class="left">
 
-            <img
-                src="/assets/logo.png"
-                class="logo-img"
-                alt="logo"
-                onclick="location.href='/'"
-            >
+            <a class="logo-link" href="/">
+                <img
+                    src="/assets/logo.png"
+                    class="logo-img"
+                    alt="RetroX logo"
+                >
+            </a>
 
             <ul class="menu">
 
@@ -48,11 +53,13 @@
 
                 <li>TV Shows</li>
 
+                <li onclick="scrollToSection('search-section')">Search</li>
+
                 <li onclick="scrollToSection('my-list-section')">My List</li>
 
                 <li onclick="scrollToSection('top-popular')">Popular</li>
 
-                <li onclick="scrollToSection('search-section')">Search</li>
+                <li onclick="scrollToSection('imdb-sidebar')">IMDB</li>
 
                 <li onclick="scrollToSection('analytics-section')">Analytics</li>
 
@@ -119,24 +126,119 @@
             <h2>Quick Nav</h2>
 
             <ul>
+                <li onclick="scrollToSection('search-section')">Search</li>
                 <li onclick="scrollToSection('continue-watching-section')">Continue Watching</li>
                 <li onclick="scrollToSection('top-popular')">Popular</li>
                 <li onclick="scrollToSection('my-list-section')">My List</li>
-                <li onclick="scrollToSection('search-section')">Search</li>
+                <li onclick="scrollToSection('imdb-sidebar')">IMDB</li>
                 <li onclick="scrollToSection('analytics-section')">Analytics</li>
             </ul>
 
-            <h2>Views Chart</h2>
+            <div class="imdb-sidebar" id="imdb-sidebar">
 
-            <canvas
-                id="stats-canvas"
-                width="180"
-                height="120"
-            ></canvas>
+                <div class="imdb-sidebar-header">
+
+                    <span class="imdb-logo">IMDb</span>
+
+                    <span class="imdb-tag">OMDb API</span>
+
+                </div>
+
+                <p class="imdb-sidebar-desc">
+                    Compare RetroX titles with real IMDB data
+                </p>
+
+                <div class="imdb-search-form">
+
+                    <select id="imdb-movie-select"></select>
+
+                    <button id="imdb-load-btn" class="imdb-load-btn">
+                        Load
+                    </button>
+
+                </div>
+
+                <div id="imdb-widget" class="imdb-widget">
+                    Select a movie to load IMDB information.
+                </div>
+
+            </div>
+
+            <div class="aside-chart-block">
+
+                <h2>Views Chart</h2>
+
+                <canvas
+                    id="stats-canvas"
+                    width="180"
+                    height="120"
+                ></canvas>
+
+            </div>
 
         </aside>
 
         <div class="main-content">
+
+    <section class="search-analytics-section" id="search-section">
+
+        <h2 class="section-title">🔍 Advanced Search</h2>
+
+        <div class="search-panels">
+
+            <div class="search-panel">
+
+                <h3>Search Movies</h3>
+                <p class="search-hint">Category + Year + Min Rating (likes)</p>
+
+                <div class="search-form">
+
+                    <select id="search1-category" required>
+                        <option value="">Select category</option>
+                        <option value="Action">Action</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Sci-Fi">Sci-Fi</option>
+                        <option value="Drama">Drama</option>
+                    </select>
+
+                    <input
+                        id="search1-year"
+                        type="number"
+                        placeholder="Year *"
+                        min="1990"
+                        max="2030"
+                        required
+                    >
+
+                    <input
+                        id="search1-minLikes"
+                        type="number"
+                        placeholder="Min rating (likes) *"
+                        min="0"
+                        required
+                    >
+
+                    <button id="search1-btn" class="search-btn">
+                        Search
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="search-results-header">
+
+            <h3 id="search-results-title">Search Results</h3>
+
+            <span id="search-results-count"></span>
+
+        </div>
+
+        <div class="feed-row" id="search-results"></div>
+
+    </section>
 
     <main id="feed-container">
 
@@ -251,111 +353,75 @@
 
     </main>
 
-    <section class="search-analytics-section" id="search-section">
-
-        <h2 class="section-title">🔍 Advanced Search</h2>
-
-        <div class="search-panels">
-
-            <div class="search-panel">
-
-                <h3>Search 1: All Movies</h3>
-                <p class="search-hint">Category + Year + Min Rating (likes)</p>
-
-                <div class="search-form">
-
-                    <select id="search1-category" required>
-                        <option value="">Select category</option>
-                        <option value="Action">Action</option>
-                        <option value="Comedy">Comedy</option>
-                        <option value="Sci-Fi">Sci-Fi</option>
-                        <option value="Drama">Drama</option>
-                    </select>
-
-                    <input
-                        id="search1-year"
-                        type="number"
-                        placeholder="Year *"
-                        min="1990"
-                        max="2030"
-                        required
-                    >
-
-                    <input
-                        id="search1-minLikes"
-                        type="number"
-                        placeholder="Min rating (likes) *"
-                        min="0"
-                        required
-                    >
-
-                    <button id="search1-btn" class="search-btn">
-                        Search
-                    </button>
-
-                </div>
-
-            </div>
-
-            <div class="search-panel">
-
-                <h3>Search 2: My List</h3>
-                <p class="search-hint">Category + Year + Min Rating for current persona</p>
-
-                <div class="search-form">
-
-                    <select id="search2-category" required>
-                        <option value="">Select category</option>
-                        <option value="Action">Action</option>
-                        <option value="Comedy">Comedy</option>
-                        <option value="Sci-Fi">Sci-Fi</option>
-                        <option value="Drama">Drama</option>
-                    </select>
-
-                    <input
-                        id="search2-year"
-                        type="number"
-                        placeholder="Year *"
-                        min="1990"
-                        max="2030"
-                        required
-                    >
-
-                    <input
-                        id="search2-minLikes"
-                        type="number"
-                        placeholder="Min rating (likes) *"
-                        min="0"
-                        required
-                    >
-
-                    <button id="search2-btn" class="search-btn">
-                        Search
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="search-results-header">
-
-            <h3 id="search-results-title">Search Results</h3>
-
-            <span id="search-results-count"></span>
-
-        </div>
-
-        <div class="feed-row" id="search-results"></div>
-
-    </section>
-
     <section class="search-analytics-section" id="analytics-section">
 
         <div id="admin-analytics-block">
 
             <h2 class="section-title">📊 Admin Reports (MongoDB)</h2>
+
+            <div class="analytics-panel user-search-panel">
+
+                <h3>🔍 Search Users</h3>
+
+                <p class="search-hint">Username + Role + Min Personas</p>
+
+                <div class="search-form user-search-form">
+
+                    <input
+                        id="user-search-q"
+                        type="text"
+                        placeholder="Username *"
+                        required>
+
+                    <select id="user-search-role">
+
+                        <option value="">All roles</option>
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+
+                    </select>
+
+                    <input
+                        id="user-search-min-personas"
+                        type="number"
+                        min="0"
+                        placeholder="Min personas">
+
+                    <button
+                        id="user-search-btn"
+                        class="search-btn"
+                        type="button">
+
+                        Search
+
+                    </button>
+
+                </div>
+
+                <p id="user-search-count" class="user-search-count"></p>
+
+                <table class="analytics-table">
+
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Role</th>
+                            <th>Personas</th>
+                            <th>Views</th>
+                            <th>My List</th>
+                            <th>Joined</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="user-search-results">
+                        <tr>
+                            <td colspan="6">Enter a username and click Search.</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
 
             <div class="analytics-panels">
 
@@ -446,30 +512,6 @@
 
         </div>
 
-        <div class="analytics-panel imdb-panel">
-
-            <h3>External Web Service — IMDB Info (OMDb API)</h3>
-
-            <p class="search-hint">
-                Compare RetroX movies with real IMDB data
-            </p>
-
-            <div class="imdb-search-form">
-
-                <select id="imdb-movie-select"></select>
-
-                <button id="imdb-load-btn" class="search-btn">
-                    Load IMDB Data
-                </button>
-
-            </div>
-
-            <div id="imdb-widget" class="imdb-widget">
-                Select a movie to load IMDB information.
-            </div>
-
-        </div>
-
     </section>
 
         </div>
@@ -541,6 +583,15 @@
                             class="review-btn">
 
                             ✍️ Write Review
+
+                        </button>
+
+                        <button
+                            id="detailMyListBtn"
+                            class="my-list-btn"
+                            type="button">
+
+                            ➕ Add to My List
 
                         </button>
 
@@ -652,6 +703,7 @@
     </div>
 
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="/js/navbar.js"></script>
     <script src="/js/mainPage.js"></script>
     <script src="/js/charts.js"></script>
 

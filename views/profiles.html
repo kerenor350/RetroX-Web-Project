@@ -21,15 +21,19 @@
 
     <link
         rel="stylesheet"
-        href="/css/profiles.css">
-
-    <link
-        rel="stylesheet"
         href="/css/fonts.css">
 
     <link
         rel="stylesheet"
         href="/css/layout.css">
+
+    <link
+        rel="stylesheet"
+        href="/css/profiles.css">
+
+    <link
+        rel="stylesheet"
+        href="/css/navbar.css">
 
 </head>
 
@@ -43,12 +47,13 @@
 
         <div class="left">
 
-            <img
-                src="/assets/logo.png"
-                class="logo-img"
-                alt="Retro Logo"
-                onclick="window.location.href='/'"
-            />
+            <a class="logo-link" href="/">
+                <img
+                    src="/assets/logo.png"
+                    class="logo-img"
+                    alt="Retro Logo"
+                >
+            </a>
 
         </div>
 
@@ -86,23 +91,21 @@
                 ADD PERSONA
         ============================ -->
 
-        <div class="add-persona">
+        <div class="add-persona-panel">
+
+            <h3 class="add-persona-title">Add Persona</h3>
 
             <input
-
                 type="text"
-
                 id="personaName"
-
                 placeholder="New persona name"
-
             >
 
-            <button id="addPersonaBtn">
+            <p class="avatar-picker-label">Choose avatar</p>
 
-                Add Persona
+            <div class="avatar-options" id="avatarOptions"></div>
 
-            </button>
+            <button id="addPersonaBtn">Add Persona</button>
 
         </div>
 
@@ -118,6 +121,7 @@
 
     </footer>
 
+    <script src="/js/navbar.js"></script>
     <script src="/js/profiles.js"></script>
 
 </body>

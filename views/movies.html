@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Movies</title>
 
-   <link rel="stylesheet" href="/css/mainPage.css">
-<link rel="stylesheet" href="/css/fonts.css">
-<link rel="stylesheet" href="/css/layout.css">
-<link rel="stylesheet" href="/css/movies.css">
+    <link rel="stylesheet" href="/css/mainPage.css">
+    <link rel="stylesheet" href="/css/fonts.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/movies.css">
+    <link rel="stylesheet" href="/css/navbar.css">
 </head>
 
 <body>
@@ -18,19 +19,21 @@
 
         <div class="left">
 
-            <img
-                src="/assets/logo.png"
-                class="logo-img"
-                alt="logo"
-                onclick="location.href='/'"
-            />
+            <a class="logo-link" href="/">
+                <img
+                    src="/assets/logo.png"
+                    class="logo-img"
+                    alt="RetroX logo"
+                >
+            </a>
 
             <ul class="menu">
 
                 <li onclick="window.location.href='/main'">Home</li>
                 <li onclick="window.location.href='/movies'">Movies</li>
+                <li onclick="window.location.href='/map'">Map</li>
                 <li>TV Shows</li>
-                <li>My List</li>
+                <li onclick="goToMyList()">My List</li>
                 <li>Popular</li>
 
             </ul>
@@ -199,6 +202,7 @@
     </div>
 
 </div>
+    <script src="/js/navbar.js"></script>
     <script src="/js/movies.js"></script>
 
 </body>

@@ -1,8 +1,16 @@
 const Movie = require("../models/movie.model");
 const WatchHistory = require("../models/watchHistory.model");
+const User = require("../models/userModel");
+const Persona = require("../models/persona.model");
 const logger = require("../utils/logger");
 
 const CATEGORIES = ["Action", "Comedy", "Sci-Fi", "Drama"];
+
+function escapeRegex(value) {
+
+    return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+}
 
 async function searchMoviesByFilters(req, res) {
 
@@ -310,12 +318,139 @@ async function getLikesByCategory(req, res) {
 
 }
 
+async function searchUsers(req, res) {
+
+    try {
+
+        const {
+            q,
+            role,
+            minPersonas
+        } = req.query;
+
+        if (!q?.trim()) {
+
+            return res.status(400).json({
+
+                success: false,
+                message: "Required parameter: q (username search)."
+
+            });
+
+        }
+
+        const filter = {
+
+            username: {
+                $regex: escapeRegex(q.trim()),
+                $options: "i"
+            }
+
+        };
+
+        if (role && role !== "all") {
+
+            filter.role = role;
+
+        }
+
+        const users = await User.find(filter)
+            .select("username role createdAt")
+            .sort({ username: 1 });
+
+        const results = await Promise.all(
+
+            users.map(async (user) => {
+
+                const personas = await Persona.find({
+                    owner: user.username
+                }).select("name");
+
+                const personaNames = personas.map(
+                    persona => persona.name
+                );
+
+                const viewCount = personaNames.length
+                    ? await WatchHistory.countDocuments({
+                        persona: { $in: personaNames }
+                    })
+                    : 0;
+
+                const myListCount = await Movie.countDocuments({
+                    listOwner: user.username
+                });
+
+                return {
+
+                    username: user.username,
+                    role: user.role,
+                    joinedAt: user.createdAt,
+                    personaCount: personas.length,
+                    personas: personaNames,
+                    viewCount,
+                    myListCount
+
+                };
+
+            })
+
+        );
+
+        let filtered = results;
+
+        if (
+            minPersonas !== undefined &&
+            minPersonas !== ""
+        ) {
+
+            filtered = results.filter(
+                user =>
+                    user.personaCount >= Number(minPersonas)
+            );
+
+        }
+
+        res.json({
+
+            success: true,
+            searchType: "users-by-filters",
+            params: {
+                q: q.trim(),
+                role: role || "all",
+                minPersonas:
+                    minPersonas === "" || minPersonas === undefined
+                        ? null
+                        : Number(minPersonas)
+            },
+            count: filtered.length,
+            users: filtered
+
+        });
+
+    }
+
+    catch (error) {
+
+        logger.error("searchUsers failed", error);
+
+        res.status(500).json({
+
+            success: false,
+            message: error.message
+
+        });
+
+    }
+
+}
+
 module.exports = {
 
     searchMoviesByFilters,
     searchMoviesByPersona,
     getMostWatchedByCategory,
     getViewsByPersona,
-    getLikesByCategory
+    getLikesByCategory,
+    searchUsers
 
 };

@@ -1,6 +1,10 @@
 ﻿const Persona =
     require("../models/persona.model");
 const logger = require("../utils/logger");
+const {
+    PERSONA_AVATARS,
+    isValidPersonaAvatar
+} = require("../utils/personaAvatars");
 
 // =====================================
 // Get Personas
@@ -47,12 +51,26 @@ async function addPersona(req, res) {
         const name =
             req.body.name?.trim();
 
+        const image =
+            req.body.image?.trim() || PERSONA_AVATARS[0];
+
         if (!name) {
 
             return res.status(400).json({
 
                 success: false,
                 message: "Persona name is required."
+
+            });
+
+        }
+
+        if (!isValidPersonaAvatar(image)) {
+
+            return res.status(400).json({
+
+                success: false,
+                message: "Please choose a valid profile image."
 
             });
 
@@ -83,7 +101,7 @@ async function addPersona(req, res) {
 
                 name,
 
-                image: "assets/man1.jpg",
+                image,
 
                 owner: req.session.username
 
@@ -241,9 +259,27 @@ async function deletePersona(req, res) {
 
 }
 
+// =====================================
+// Get Persona Avatars
+// =====================================
+
+async function getPersonaAvatars(req, res) {
+
+    res.json({
+
+        success: true,
+
+        avatars: PERSONA_AVATARS
+
+    });
+
+}
+
 module.exports = {
 
     getAllPersonas,
+
+    getPersonaAvatars,
 
     addPersona,
 
