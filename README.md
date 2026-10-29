@@ -32,7 +32,10 @@ HTML5 · CSS3 · JavaScript · Node.js · Express 5 · MongoDB · Mongoose · ex
 ## Quick Start
 
 ```bash
-git clone https://github.com/kerenor350/WebDev.git
+git clone https://github.com/kerenor350/RetroX-Web-Project.git
+cd WebDev
+git checkout step10
+npm install
 cd WebDev
 git checkout step10
 npm install
